@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Collectibles : MonoBehaviour
 {
+
+    public Enum_Collectibles.CollectibleType type;
+
+    public int SpaceshipPieceIndex = 0;
+    
     
     // Singleton to be accessible anywhere
     
     private static Collectibles _instance;
-    public Enum_Collectibles.CollectibleType type;
 
     public static Collectibles Instance
     {
@@ -32,12 +36,21 @@ public class Collectibles : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // If the collectible is a screw
-            if (type == Enum_Collectibles.CollectibleType.Screws)
+            switch (type)
             {
-                Player.Instance.AddScrews();
-                HUD.Instance.UpdateScrewsText(Player.Instance.GetScrews());
-                Destroy(this);
+                case Enum_Collectibles.CollectibleType.Screws :
+                    Player.Instance.AddScrews();
+                    HUD.Instance.UpdateScrewsText(Player.Instance.GetScrews());
+                    Destroy(this);
+                    break;
+                case Enum_Collectibles.CollectibleType.Gun :
+                    break;
+                case Enum_Collectibles.CollectibleType.Sword :
+                    break;
+                case Enum_Collectibles.CollectibleType.Jetpack :
+                    break;
+                case Enum_Collectibles.CollectibleType.SpaceshipPieces :
+                    break;
             }
         }
     }

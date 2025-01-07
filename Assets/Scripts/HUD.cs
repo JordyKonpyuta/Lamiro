@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour
     // Called when a screw is picked up
     public void UpdateScrewsText(int screws)
     {
-        screwsText.text = "Screws : " + screws;
+        screwsText.text = "" + screws;
     }
     
     
