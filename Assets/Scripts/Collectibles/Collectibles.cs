@@ -5,7 +5,7 @@ public class Collectibles : MonoBehaviour
 
     public Enum_Collectibles.CollectibleType type;
 
-    public int SpaceshipPieceIndex = 0;
+    public int spaceshipPieceIndex = 0;
     
     
     // Singleton to be accessible anywhere
@@ -44,12 +44,21 @@ public class Collectibles : MonoBehaviour
                     Destroy(this);
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
+                    Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Gun;
+                    HUD.Instance.SetWeaponIcon(HUD.Instance.gunSprite);
+                    Destroy(this);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
+                    Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Sword;
+                    HUD.Instance.SetWeaponIcon(HUD.Instance.swordSprite);
+                    Destroy(this);
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
+                    Player.Instance.ObtainSpaceshipPiece(spaceshipPieceIndex);
+                    HUD.Instance.spaceshipPiecesImages[spaceshipPieceIndex].enabled = true;
+                    Destroy(this);
                     break;
             }
         }

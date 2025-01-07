@@ -1,17 +1,12 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HUD : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
-
     // Singleton to be accessible anywhere
     
-    public Text screwsText;
-    
-    private static HUD _instance;
+    private static Weapon _instance;
 
-    public static HUD Instance
+    public static Weapon Instance
     {
         get
         {
@@ -23,18 +18,12 @@ public class HUD : MonoBehaviour
             return _instance;
         }
     }
-    
+
     void Awake()
     {
         _instance = this;
     }
-
     
-    // Called when a screw is picked up
-    public void UpdateScrewsText(int screws)
-    {
-        screwsText.text = "" + screws;
-    }
-    
+    public EnumWeapon.WeaponType weaponEquipped;
     
 }

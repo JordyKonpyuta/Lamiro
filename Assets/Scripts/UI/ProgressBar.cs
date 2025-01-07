@@ -7,6 +7,28 @@ using UnityEditor;
 [ExecuteInEditMode()]
 public class ProgressBar : MonoBehaviour
 {
+    
+    // Singleton to be accessible everywhere
+    private static ProgressBar _instance;
+
+    public static ProgressBar Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Player is null!");
+            }
+
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        _instance = this;
+    }
+    
     #if UNITY_EDITOR
     [MenuItem("GameObject/UI/Progress Bar")]
     public static void AddProgressBar()
@@ -16,22 +38,19 @@ public class ProgressBar : MonoBehaviour
     }
     #endif
     
-    public int minimum;
-    public int maximum;
-    public int current;
+    public int minimum = 0;
+    public int maximum = 100;
+    public int current = 100;
     public Image mask;
     public Image fill;
     public Color color;
     
 
-    // Update is called once per frame
-    void Update()
+    // Bind Fill Bar
+    public void SetBarPercentage(int c, int max)
     {
-        SetBarPercentage();
-    }
-
-    void SetBarPercentage()
-    {
+        current = c;
+        maximum = max;
         float currentOffset = current - minimum;
         float maximumOffset = maximum - minimum;
         float fillAmount = currentOffset / maximumOffset;
