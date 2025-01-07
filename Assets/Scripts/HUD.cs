@@ -1,14 +1,17 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class HUD : MonoBehaviour
 {
-    [SerializeField] private int screws;
-    
+
     // Singleton to be accessible anywhere
     
-    private static Player _instance;
+    public Text screwsText;
+    
+    private static HUD _instance;
 
-    public static Player Instance
+    public static HUD Instance
     {
         get
         {
@@ -20,21 +23,18 @@ public class Player : MonoBehaviour
             return _instance;
         }
     }
-
+    
     void Awake()
     {
         _instance = this;
     }
 
     
-    // Getter and Setter for screws
-    public int GetScrews()
+    // Called when a screw is picked up
+    public void UpdateScrewsText(int screws)
     {
-        return screws;
+        screwsText.text = "Screws : " + screws;
     }
     
-    public void AddScrews()
-    {
-        screws++;
-    }
+    
 }
