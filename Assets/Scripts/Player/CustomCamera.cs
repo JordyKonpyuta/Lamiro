@@ -7,19 +7,21 @@ public class Camera : MonoBehaviour
     // Initialisation Variables
     [Tooltip("Camera Component")] private Camera _camera;
     
-    [Tooltip("Camera Position to Reach")] public Vector3 trueCameraPosition = new Vector3(0,0,0);
+    [Header("Camera target position")] [Tooltip("Camera Position to Reach")] 
+    public Vector3 trueCameraPosition = new Vector3(0,0,0);
         // X = room middle ; Y = constant 17 ; Z = room middle - 4
-    
-    
-    private Vector3 camVelocity = Vector3.zero;
+        
+    private Vector3 _camVelocity = Vector3.zero;
 
     // Big Room Camera Handling
-    [Tooltip("Is a Big Room")] public bool bIsBigRoom = false;
+    [Header("Camera Behaviour")] [Tooltip("Is a Big Room")] 
+    public bool bIsBigRoom;
     [Tooltip("Big Room Bottom Left Position")] private Vector2 _bigRoomBottomLeft = new Vector2(0,0);
     [Tooltip("Big Room Top Right Position")] private Vector2 _bigRoomTopRight = new Vector2(0,0);
     
     // Cinematic Handling
-    [Tooltip("Is in a cinematic")] public bool bIsCinematic = false;
+    [Header("Camera Behaviour")] [Tooltip("Is in a cinematic")] 
+    public bool bIsCinematic;
     
 
     // -------------------- //
@@ -30,7 +32,8 @@ public class Camera : MonoBehaviour
     void Start()
     {
         _camera = this.GameObject().GetComponent<Camera>();
-        trueCameraPosition = new Vector3(20.0f, 19.0f, 3.0f);
+        _camera.transform.parent = null;
+        trueCameraPosition = new Vector3(20.0f, 20.0f, 7.0f);
         _camera.transform.rotation = Quaternion.Euler(75.0f, 0.0f, 0.0f);
     }
 
@@ -51,7 +54,7 @@ public class Camera : MonoBehaviour
             );
         }
         
-        _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, trueCameraPosition, ref camVelocity, 0.1f);
+        _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, trueCameraPosition, ref _camVelocity, 0.1f);
     }
 
     public void SetRoomDataBig(Vector2 entrance)
