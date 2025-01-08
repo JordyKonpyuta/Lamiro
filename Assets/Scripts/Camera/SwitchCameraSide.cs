@@ -5,9 +5,10 @@ using UnityEngine;
 public class SwitchCameraSide : MonoBehaviour
 {
     public enum_Sides.Direction direction;
-    public bool bigRoom;
+    [Tooltip("Is one of the sides a Beeg Room?")] public bool bigRoom;
+    [Tooltip("Set the big room's position")] public enum_Sides.Sides sideEntranceForBigRoom;
     
-    [Header("Box1")] public BoxCollider col;
+    private BoxCollider _col;
     private float _refValue;
 
     // -------------------- //
@@ -18,8 +19,8 @@ public class SwitchCameraSide : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        col = GetComponent<BoxCollider>();
-        if (col == null || direction == enum_Sides.Direction.None)
+        _col = GetComponent<BoxCollider>();
+        if (_col == null || direction == enum_Sides.Direction.None)
             print("ERROR! " + gameObject.name + " HAS NULL REFERENCES AND/OR NO DIRECTION!");
     }
 
@@ -56,6 +57,7 @@ public class SwitchCameraSide : MonoBehaviour
     {
         if (other.GameObject().CompareTag("Player"))
         {
+            Vector3 entranceRefVector = new Vector2(transform.position.x, transform.position.z);
             switch (direction)
             {
                 case enum_Sides.Direction.Vertical:
@@ -66,15 +68,14 @@ public class SwitchCameraSide : MonoBehaviour
                             this.GameObject().transform.position.z)
                         {
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
-                                .GetComponent<CustomCamera>().GoRoomTop(false, Vector2.zero);
+                                .GetComponent<CustomCamera>().GoRoomTop(sideEntranceForBigRoom == enum_Sides.Sides.North, entranceRefVector);
                         }
                         else
                         {
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
-                                .GetComponent<CustomCamera>().GoRoomBottom(false, Vector2.zero);
+                                .GetComponent<CustomCamera>().GoRoomBottom(sideEntranceForBigRoom == enum_Sides.Sides.South, entranceRefVector);
                         }
                     }
-                    print("RefValue = " + _refValue + "; Player Value = " + other.GameObject().transform.position.z);
                     break;
                 case enum_Sides.Direction.Horizontal:
                     if (Math.Abs(_refValue - other.GameObject().transform.position.x) > 1.5f)
@@ -84,12 +85,12 @@ public class SwitchCameraSide : MonoBehaviour
                             this.GameObject().transform.position.x)
                         {
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
-                                .GetComponent<CustomCamera>().GoRoomRight(false, Vector2.zero);
+                                .GetComponent<CustomCamera>().GoRoomRight(sideEntranceForBigRoom == enum_Sides.Sides.East, entranceRefVector);
                         }
                         else
                         {
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
-                                .GetComponent<CustomCamera>().GoRoomLeft(false, Vector2.zero);
+                                .GetComponent<CustomCamera>().GoRoomLeft(sideEntranceForBigRoom == enum_Sides.Sides.West, entranceRefVector);
                         }
                     }
                     break;

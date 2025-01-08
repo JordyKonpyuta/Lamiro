@@ -23,6 +23,9 @@ public class CustomCamera : MonoBehaviour
     [Header("Camera Behaviour")] [Tooltip("Is in a cinematic")] 
     public bool bIsCinematic;
     
+    // References
+    private CapsuleCollider _playerBodyRef;
+    
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -33,8 +36,9 @@ public class CustomCamera : MonoBehaviour
     {
         _camera = this.GameObject().GetComponent<Camera>();
         _camera.transform.parent.GetComponent<AllPlayerReferences>().cameraRef = _camera;
+        _playerBodyRef = _camera.transform.parent.GetComponent<CapsuleCollider>();
         _camera.transform.parent = null;
-        trueCameraPosition = new Vector3(20.0f, 20.0f, 7.0f);
+        trueCameraPosition = new Vector3(20.0f, 25.0f, 4.0f);
         _camera.transform.rotation = Quaternion.Euler(75.0f, 0.0f, 0.0f);
     }
 
@@ -49,39 +53,48 @@ public class CustomCamera : MonoBehaviour
         if (bIsBigRoom)
         {
             trueCameraPosition = new Vector3(
-                Mathf.Clamp(this.GameObject().transform.position.x, _bigRoomBottomLeft.x, _bigRoomTopRight.x), 
-                17.0f,
-                Mathf.Clamp(this.GameObject().transform.position.y, _bigRoomBottomLeft.y, _bigRoomTopRight.y)
+                Mathf.Clamp(_playerBodyRef.transform.position.x, _bigRoomBottomLeft.x, _bigRoomTopRight.x), 
+                25.0f,
+                Mathf.Clamp(_playerBodyRef.transform.position.z - 6, _bigRoomBottomLeft.y, _bigRoomTopRight.y)
             );
+            print(trueCameraPosition);
         }
         
         _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, trueCameraPosition, ref _camVelocity, 0.1f);
     }
 
-    private void SetRoomDataBig(Vector2 entrance)
+    private void SetRoomDataBig(Vector2 entrance, enum_Sides.Sides entranceSide)
     {
         if (bIsBigRoom)
         {
-            if (entrance.x == 0)
+            switch (entranceSide)
             {
-                _bigRoomBottomLeft.x = trueCameraPosition.x;
-                _bigRoomTopRight.x = trueCameraPosition.x + 40;
-            }
-            else
-            {
-                _bigRoomBottomLeft.x = trueCameraPosition.x - 40;
-                _bigRoomTopRight.x = trueCameraPosition.x;
-            }
-
-            if (entrance.y == 0)
-            {
-                _bigRoomBottomLeft.y = trueCameraPosition.y;
-                _bigRoomTopRight.y = trueCameraPosition.y + 20;
-            }
-            else
-            {
-                _bigRoomBottomLeft.y = trueCameraPosition.y - 20;
-                _bigRoomTopRight.y = trueCameraPosition.y;
+                case enum_Sides.Sides.North:
+                    _bigRoomBottomLeft.x = entrance.x - 20;
+                    _bigRoomBottomLeft.y = entrance.y;
+                    _bigRoomTopRight.x = entrance.x + 20;
+                    _bigRoomTopRight.y = entrance.y + 20;
+                    break;
+                case enum_Sides.Sides.West:
+                    _bigRoomBottomLeft.x = entrance.x - 60;
+                    _bigRoomBottomLeft.y = entrance.y - 20;
+                    _bigRoomTopRight.x = entrance.x - 20;
+                    _bigRoomTopRight.y = entrance.y;
+                    break;
+                case enum_Sides.Sides.East:
+                    _bigRoomBottomLeft.x = entrance.x + 20;
+                    _bigRoomBottomLeft.y = entrance.y - 20;
+                    _bigRoomTopRight.x = entrance.x + 60;
+                    _bigRoomTopRight.y = entrance.y ;
+                    break;
+                case enum_Sides.Sides.South:
+                    _bigRoomBottomLeft.x = entrance.x - 20;
+                    _bigRoomBottomLeft.y = entrance.y - 40;
+                    _bigRoomTopRight.x = entrance.x + 20;
+                    _bigRoomTopRight.y = entrance.y - 20;
+                    break;
+                case enum_Sides.Sides.None:
+                    break;
             }
         }
     }
@@ -89,48 +102,56 @@ public class CustomCamera : MonoBehaviour
     public void GoRoomLeft(bool bBigRoom, Vector2 entrance)
     {
         trueCameraPosition.x -= 40;
-        if (bBigRoom)
+        if (bIsBigRoom)
         {
-            bIsBigRoom = true;
-            SetRoomDataBig(entrance);
-            if (Math.Abs(entrance.x) < 0.1f)
-                print("Entrance X is impossible!");
+            trueCameraPosition.z = entrance.y - 10;
+        }
+        bIsBigRoom = bBigRoom;
+        if (bIsBigRoom)
+        {
+            SetRoomDataBig(entrance, enum_Sides.Sides.West);
         }
     }
 
     public void GoRoomRight(bool bBigRoom, Vector2 entrance)
     {
         trueCameraPosition.x += 40;
-        if (bBigRoom)
+        if (bIsBigRoom)
         {
-            bIsBigRoom = true;
-            SetRoomDataBig(entrance);
-            if (Math.Abs(entrance.x - 1) < 0.1)
-                print("Entrance X is impossible!");
+            trueCameraPosition.z = entrance.y - 10;
+        }
+        bIsBigRoom = bBigRoom;
+        if (bIsBigRoom)
+        {
+            SetRoomDataBig(entrance, enum_Sides.Sides.East);
         }
     }
 
     public void GoRoomTop(bool bBigRoom, Vector2 entrance)
     {
         trueCameraPosition.z += 20;
-        if (bBigRoom)
+        if (bIsBigRoom)
         {
-            bIsBigRoom = true;
-            SetRoomDataBig(entrance);
-            if (Math.Abs(entrance.y - 1) < 0.1)
-                print("Entrance Y is impossible!");
+            trueCameraPosition.x = entrance.x;
+        }
+        bIsBigRoom = bBigRoom;
+        if (bIsBigRoom)
+        {
+            SetRoomDataBig(entrance, enum_Sides.Sides.North);
         }
     }
 
     public void GoRoomBottom(bool bBigRoom, Vector2 entrance)
     {
         trueCameraPosition.z -= 20;
+        if (bIsBigRoom)
+        {
+            trueCameraPosition.x = entrance.x;
+        }
+        bIsBigRoom = bBigRoom;
         if (bBigRoom)
         {
-            bIsBigRoom = true;
-            SetRoomDataBig(entrance);
-            if (Math.Abs(entrance.y) < 0.1)
-                print("Entrance Y is impossible!");
+            SetRoomDataBig(entrance, enum_Sides.Sides.South);
         }
     }
 }
