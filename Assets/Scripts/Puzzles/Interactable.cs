@@ -6,16 +6,19 @@ public abstract class Interactable : MonoBehaviour
     public Enum_InteractableTypes.InteractableType objectType;
     public LinkedObject[] linkedObjects;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Sword"))
-        {
-            OnInteract();
-        }
-    }
-
     void OnInteract()
     {
+        switch (objectType)
+        {
+            case Enum_InteractableTypes.InteractableType.Crate :
+                break;
+            case Enum_InteractableTypes.InteractableType.Mushroom :
+                break;
+            case Enum_InteractableTypes.InteractableType.Pinecone :
+                break;
+            case Enum_InteractableTypes.InteractableType.Grass :
+                break;
+        }
         print("Bim !");
         if (linkedObjects.Length != 0)
         {

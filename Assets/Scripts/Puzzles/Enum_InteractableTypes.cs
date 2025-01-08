@@ -6,7 +6,8 @@ public class Enum_InteractableTypes : MonoBehaviour
     {
         Mushroom,
         Pinecone,
-        Crate
+        Crate,
+        Grass
     }
 
     public InteractableType type;
