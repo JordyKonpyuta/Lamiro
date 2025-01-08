@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class CustomCamera : MonoBehaviour
 {
     // Initialisation Variables
     [Tooltip("Camera Component")] private Camera _camera;
@@ -32,6 +32,7 @@ public class Camera : MonoBehaviour
     void Start()
     {
         _camera = this.GameObject().GetComponent<Camera>();
+        _camera.transform.parent.GetComponent<AllPlayerReferences>().cameraRef = _camera;
         _camera.transform.parent = null;
         trueCameraPosition = new Vector3(20.0f, 20.0f, 7.0f);
         _camera.transform.rotation = Quaternion.Euler(75.0f, 0.0f, 0.0f);
@@ -57,7 +58,7 @@ public class Camera : MonoBehaviour
         _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, trueCameraPosition, ref _camVelocity, 0.1f);
     }
 
-    public void SetRoomDataBig(Vector2 entrance)
+    private void SetRoomDataBig(Vector2 entrance)
     {
         if (bIsBigRoom)
         {
@@ -111,7 +112,7 @@ public class Camera : MonoBehaviour
 
     public void GoRoomTop(bool bBigRoom, Vector2 entrance)
     {
-        trueCameraPosition.y += 20;
+        trueCameraPosition.z += 20;
         if (bBigRoom)
         {
             bIsBigRoom = true;
@@ -123,7 +124,7 @@ public class Camera : MonoBehaviour
 
     public void GoRoomBottom(bool bBigRoom, Vector2 entrance)
     {
-        trueCameraPosition.y -= 20;
+        trueCameraPosition.z -= 20;
         if (bBigRoom)
         {
             bIsBigRoom = true;
