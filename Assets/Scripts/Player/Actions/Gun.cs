@@ -5,6 +5,10 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     private CapsuleCollider _playerBodyRef;
     
+    // -------------------- //
+    //       FUNCTIONS      //
+    // -------------------- //
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

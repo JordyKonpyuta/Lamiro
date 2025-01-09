@@ -7,6 +7,10 @@ public class Bullet : MonoBehaviour
     private Rigidbody _body;
     private Vector3 _moveDirection;
     
+    // -------------------- //
+    //       FUNCTIONS      //
+    // -------------------- //
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

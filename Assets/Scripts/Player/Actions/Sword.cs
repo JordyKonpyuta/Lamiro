@@ -11,6 +11,10 @@ public class Sword : MonoBehaviour
     // Enemy Refs
     private List<Ennemy> _allEnemies = new();
     
+    // -------------------- //
+    //       FUNCTIONS      //
+    // -------------------- //
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

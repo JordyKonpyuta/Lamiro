@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private int _maxHealth = 3;
+    private int _currentHealth = 3;
 
+    // -------------------- //
+    //       FUNCTIONS      //
+    // -------------------- //
+    
     // Singleton to be accessible everywhere
     private static PlayerHealth _instance;
 
@@ -24,9 +30,6 @@ public class PlayerHealth : MonoBehaviour
     {
         _instance = this;
     }
-    
-    private int _maxHealth = 100;
-    private int _currentHealth = 100;
 
     void Start()
     {
