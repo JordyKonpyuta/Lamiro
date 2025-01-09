@@ -6,7 +6,6 @@ public class Enum_MushroomColors : MonoBehaviour
     {
         Red,
         Blue,
-        Green
     }
 
     public Colors color;

@@ -827,7 +827,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screwsText: {fileID: 5921553838563451259}
-  spaceshipPiecesImages: []
+  spaceshipPiecesImages:
+  - {fileID: 3908069103831880196}
+  - {fileID: 2664360926586173208}
+  - {fileID: 293243112169094009}
+  - {fileID: 3633135908325990538}
+  - {fileID: 2310038788126848013}
   weaponIcon: {fileID: 8135601741489886744}
   gunSprite: {fileID: 0}
   swordSprite: {fileID: 0}

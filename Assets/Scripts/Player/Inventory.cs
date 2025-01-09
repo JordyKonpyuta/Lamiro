@@ -1,15 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
     [SerializeField] private int screws;
     
     // Singleton to be accessible anywhere
     
-    private static Player _instance;
+    private static Inventory _instance;
 
-    public static Player Instance
+    public static Inventory Instance
     {
         get
         {

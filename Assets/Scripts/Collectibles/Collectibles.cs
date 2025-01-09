@@ -5,6 +5,8 @@ public class Collectibles : MonoBehaviour
 
     public Enum_Collectibles.CollectibleType type;
 
+    public Transform[] meshes;
+
     public int spaceshipPieceIndex = 0;
     
     
@@ -28,6 +30,22 @@ public class Collectibles : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+        switch (type)
+        {
+            case Enum_Collectibles.CollectibleType.Sword :
+                ActivateMesh(0);
+                break;
+            case Enum_Collectibles.CollectibleType.Screws :
+                ActivateMesh(1);
+                break;
+            case Enum_Collectibles.CollectibleType.Gun :
+                ActivateMesh(2);
+                break;
+            case Enum_Collectibles.CollectibleType.Jetpack :
+                ActivateMesh(3);
+                break;
+        }
     }
 
     
@@ -39,28 +57,39 @@ public class Collectibles : MonoBehaviour
             switch (type)
             {
                 case Enum_Collectibles.CollectibleType.Screws :
-                    Player.Instance.AddScrews();
-                    HUD.Instance.UpdateScrewsText(Player.Instance.GetScrews());
-                    Destroy(this);
+                    other.gameObject.GetComponent<Inventory>().AddScrews();
+                    HUD.Instance.UpdateScrewsText(Inventory.Instance.GetScrews());
+                    Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Gun;
                     HUD.Instance.SetWeaponIcon(HUD.Instance.gunSprite);
-                    Destroy(this);
+                    Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Sword;
                     HUD.Instance.SetWeaponIcon(HUD.Instance.swordSprite);
-                    Destroy(this);
+                    Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
-                    Player.Instance.ObtainSpaceshipPiece(spaceshipPieceIndex);
-                    HUD.Instance.spaceshipPiecesImages[spaceshipPieceIndex].enabled = true;
-                    Destroy(this);
+                    other.gameObject.GetComponent<Inventory>().ObtainSpaceshipPiece(spaceshipPieceIndex);
+                    HUD.Instance.spaceshipPiecesImages[spaceshipPieceIndex].gameObject.SetActive(true);
+                    Destroy(gameObject);
                     break;
             }
+        }
+    }
+
+    private void ActivateMesh(int index)
+    {
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            if (index == i)
+                meshes[i].gameObject.SetActive(true);
+            else 
+                meshes[i].gameObject.SetActive(false);
         }
     }
 }

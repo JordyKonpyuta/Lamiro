@@ -7,40 +7,41 @@ public class Interactable : MonoBehaviour
     public LinkedObject[] linkedObjects;
     public Enum_MushroomColors.Colors objectColor;
 
+    public Transform[] meshes;
+
     private GameObject _interactable;
-    private MeshFilter _interactableMesh;
 
 
     private void Awake()
     {
-        _interactableMesh = _interactable.GetComponent<MeshFilter>();
         
         switch (objectType)
         {
             case Enum_InteractableTypes.InteractableType.Crate :
+                ActivateMesh(0);
                 break;
             case Enum_InteractableTypes.InteractableType.Grass :
+                ActivateMesh(1);
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
-                _interactableMesh.sharedMesh = (Mesh)Resources.Load("Assets/Addons/Polytope Studio/Lowpoly_Environments/Sources/Meshes/Mushrooms/PT_Caesars_Mushroom_01.fbx");
+                ActivateMesh(2);
                 switch (objectColor)
                 {
                     case Enum_MushroomColors.Colors.Blue :
-                        _interactableMesh.GetComponent<Renderer>().material.color = Color.blue;
-                        break;
-                    case Enum_MushroomColors.Colors.Green :
-                        _interactableMesh.GetComponent<Renderer>().material.color = Color.green;
+                        meshes[2].gameObject.GetComponent<Material>().SetColor(1, Color.blue);
                         break;
                     case Enum_MushroomColors.Colors.Red :
-                        _interactableMesh.GetComponent<Renderer>().material.color = Color.red;
+                        meshes[2].gameObject.GetComponent<Material>().SetColor(1, Color.red);
                         break;
                 }
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
+                ActivateMesh(3);
                 break;
         }
     }
 
+    // Event Interaction
     void OnInteract()
     {
         switch (objectType)
@@ -48,6 +49,17 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Crate :
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
+                if (linkedObjects.Length != 0)
+                {
+                    foreach (LinkedObject objects in linkedObjects)
+                    {
+                        if (objects.objectColor == objectColor)
+                        {
+                            objects.Interaction();
+                        }
+                    }
+                }
+                objectColor = objectColor == Enum_MushroomColors.Colors.Blue ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Blue;
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;
@@ -55,15 +67,16 @@ public class Interactable : MonoBehaviour
                 break;
         }
         print("Bim !");
-        if (linkedObjects.Length != 0)
+    }
+
+    private void ActivateMesh(int index)
+    {
+        for (int i = 0; i < meshes.Length; i++)
         {
-            foreach (LinkedObject objects in linkedObjects)
-            {
-                if (objects.objectColor == objectColor)
-                {
-                    objects.Interaction();
-                }
-            }
+            if (i == index)
+                meshes[i].gameObject.SetActive(true);
+            else 
+                meshes[i].gameObject.SetActive(false);
         }
     }
 }

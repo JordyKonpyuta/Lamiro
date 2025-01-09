@@ -6,7 +6,6 @@ public class Enum_EnnemyTypes : MonoBehaviour
     {
         Mushroom,
         Slime,
-        Cat,
         Spider,
         Rabbit
     }
