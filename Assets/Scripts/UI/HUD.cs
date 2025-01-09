@@ -9,9 +9,10 @@ public class HUD : MonoBehaviour
     public Image[] spaceshipPiecesImages;
 
     // Images for the weapon Icon
-    public Image weaponIcon;
-    public Sprite gunSprite;
-    public Sprite swordSprite;
+    public Image[] weaponIcons;
+    
+    // Images for Health
+    public Image[] healthImages;
     
     // Singleton to be accessible anywhere
     private static HUD _instance;
@@ -42,11 +43,9 @@ public class HUD : MonoBehaviour
     }
 
     // Set Weapon Icon
-    public void SetWeaponIcon(Sprite s)
+    public void SetWeaponIcon(int index)
     {
-        weaponIcon.enabled = true;
-        weaponIcon.sprite = s;
+        weaponIcons[index].enabled = true;
     }
-
 
 }

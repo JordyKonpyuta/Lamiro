@@ -63,12 +63,12 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Gun;
-                    HUD.Instance.SetWeaponIcon(HUD.Instance.gunSprite);
+                    HUD.Instance.SetWeaponIcon(0);
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Sword;
-                    HUD.Instance.SetWeaponIcon(HUD.Instance.swordSprite);
+                    HUD.Instance.SetWeaponIcon(0);
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
