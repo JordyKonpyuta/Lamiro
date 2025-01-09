@@ -33,7 +33,7 @@ public class Ennemy : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player"); 
         navMesh = GetComponent<NavMeshAgent>();
         
         switch (ennemyType)

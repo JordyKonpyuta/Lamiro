@@ -13,8 +13,10 @@ public class CustomPlayerActions : MonoBehaviour
     
     // Rotation
     private float newRot = 0;
-    private int xChecker = 0;
-    private int yChecker = 0;
+    private float xToCheck = 0;
+    private float xChecker = 0;
+    private float yToCheck = 0;
+    private float yChecker = 0;
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -34,8 +36,29 @@ public class CustomPlayerActions : MonoBehaviour
         RaycastHit hitCast;
         _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, _groundLayer);
         
+        // Movement Priorities Calculations
+        print(Input.GetAxis("Horizontal") + " / " + xToCheck);
+
+        if ((Input.GetAxis("Horizontal") > 0.01 || Input.GetAxis("Horizontal") < -0.01) && Math.Abs(Input.GetAxis("Horizontal")) >= Math.Abs(xToCheck) && Input.GetAxis("Horizontal") != 0)
+        {
+            xToCheck = Input.GetAxis("Horizontal");
+            yToCheck = 0;
+            _directionMove = new Vector3(Input.GetAxis("Horizontal") > 0 ? 1 : -1, 0, 0);
+        }
+        else if ((Input.GetAxis("Vertical") > 0.01 || Input.GetAxis("Vertical") < -0.01) && Math.Abs(Input.GetAxis("Vertical")) >= Math.Abs(yToCheck) && Input.GetAxis("Vertical") != 0)
+        {
+            xToCheck = 0;
+            yToCheck = Input.GetAxis("Vertical");
+            _directionMove = new Vector3(0, 0, Input.GetAxis("Vertical") > 0 ? 1 : -1);
+        }
+        else
+        {
+            xToCheck = 0;
+            yToCheck = 0;
+            _directionMove = new Vector3(0, 0, 0);
+        }
+        
         // Move
-        _directionMove = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         _directionMove *= movementSpeed * Time.deltaTime;
         _body.MovePosition(transform.position + _directionMove);
         
@@ -46,19 +69,19 @@ public class CustomPlayerActions : MonoBehaviour
         }
         
         // Rotation
-        
-        int xToCheck = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
-        int yToCheck = Input.GetAxis("Vertical") > 0 ? 1 : -1;
-        
-        if (Input.GetButton("Horizontal") && xToCheck != xChecker )
+        int xToCheck2 = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
+        int yToCheck2 = Input.GetAxis("Vertical") > 0 ? 1 : -1;
+        if (Input.GetButton("Horizontal") && Math.Abs(xToCheck - xChecker) > 0.01 )
         {
             RotationHorizontal(Input.GetAxis("Horizontal"));
-            xChecker = xToCheck;
+            xChecker = xToCheck2;
+            yChecker = 0;
         }
-        else if (Input.GetButton("Vertical") && yToCheck != yChecker)
+        else if (Input.GetButton("Vertical") && Math.Abs(yToCheck - yChecker) > 0.01)
         {
             RotationVertical(Input.GetAxis("Vertical"));
-            yChecker = yToCheck;
+            xChecker = 0;
+            yChecker = yToCheck2;
         }
     }
 

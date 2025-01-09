@@ -62,7 +62,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int d)
     {
         _currentHealth -= d;
-        ProgressBar.Instance.SetBarPercentage(_currentHealth, _maxHealth);
+        //ProgressBar.Instance.SetBarPercentage(_currentHealth, _maxHealth);
         if (_currentHealth <= 0)
         {
             Death();
