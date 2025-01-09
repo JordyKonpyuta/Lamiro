@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class CustomPlayerMovement : MonoBehaviour
+public class CustomPlayerActions : MonoBehaviour
 {
     public float jumpForce = 10.0f;
     public float movementSpeed = 5.0f;
@@ -9,6 +10,11 @@ public class CustomPlayerMovement : MonoBehaviour
     private Vector3 _directionMove = Vector3.zero;
     private bool _bIsGrounded = true;
     private LayerMask _groundLayer;
+    
+    // Rotation
+    private float newRot = 0;
+    private int xChecker = 0;
+    private int yChecker = 0;
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -39,6 +45,35 @@ public class CustomPlayerMovement : MonoBehaviour
         {
             _body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+        
+        // Rotation
+        
+        int xToCheck = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
+        int yToCheck = Input.GetAxis("Vertical") > 0 ? 1 : -1;
+        
+        if (Input.GetButton("Horizontal") && xToCheck != xChecker )
+        {
+            RotationHorizontal(Input.GetAxis("Horizontal"));
+            xChecker = xToCheck;
+        }
+        else if (Input.GetButton("Vertical") && yToCheck != yChecker)
+        {
+            RotationVertical(Input.GetAxis("Vertical"));
+            yChecker = yToCheck;
+        }
     }
-    
+
+    void RotationHorizontal(float rotationXValue)
+    {
+        newRot = rotationXValue > 0 ? 90 : -90;
+        if (Math.Abs(newRot - _body.rotation.y) > 0.1)
+            _body.rotation = Quaternion.Euler(0, newRot, 0);
+    }
+
+    void RotationVertical(float rotationYValue)
+    {
+        newRot = rotationYValue > 0 ? 0 : 180;
+        if (Math.Abs(newRot - _body.rotation.y) > 0.1)
+            _body.rotation = Quaternion.Euler(0, newRot, 0);
+    }
 }
