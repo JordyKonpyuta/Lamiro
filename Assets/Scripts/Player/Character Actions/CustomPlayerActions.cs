@@ -37,8 +37,6 @@ public class CustomPlayerActions : MonoBehaviour
         _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, _groundLayer);
         
         // Movement Priorities Calculations
-        print(Input.GetAxis("Horizontal") + " / " + xToCheck);
-
         if ((Input.GetAxis("Horizontal") > 0.01 || Input.GetAxis("Horizontal") < -0.01) && Math.Abs(Input.GetAxis("Horizontal")) >= Math.Abs(xToCheck) && Input.GetAxis("Horizontal") != 0)
         {
             xToCheck = Input.GetAxis("Horizontal");

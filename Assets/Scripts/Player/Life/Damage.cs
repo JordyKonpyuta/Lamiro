@@ -19,7 +19,7 @@ public class Damage : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _playerHealthRef = gameObject.GetComponent<PlayerHealth>();
+        _playerHealthRef = gameObject.transform.parent.GetComponent<PlayerHealth>();
         _collisionBody = gameObject.GetComponent<CapsuleCollider>();
         _currentInvulnerabilityTime = totalInvulnerableTime;
     }
@@ -38,9 +38,9 @@ public class Damage : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("EnemyBullet"))
+        if ((other.CompareTag("Enemy") || other.CompareTag("EnemyBullet")) && !_isInvulnerable)
         {
             _playerHealthRef.TakeDamage(1);
             _isInvulnerable = true;

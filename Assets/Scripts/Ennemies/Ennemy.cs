@@ -64,7 +64,7 @@ public class Ennemy : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
             {
-                AttackPlayer();
+                //AttackPlayer();
             }
             else ChasePlayer();
         }
