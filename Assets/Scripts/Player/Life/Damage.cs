@@ -27,23 +27,21 @@ public class Damage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isInvulnerable)
-        {
-            _currentInvulnerabilityTime -= Time.deltaTime;
-            if (_currentInvulnerabilityTime <= 0)
-            {
-                _isInvulnerable = false;
-                _currentInvulnerabilityTime = totalInvulnerableTime;
-            }
-        }
+        
     }
 
-    void OnTriggerEnter(Collider other)
+    void ResetInvulnerability()
+    {
+        _isInvulnerable = false;
+    }
+
+    void OnTriggerStay(Collider other)
     {
         if ((other.CompareTag("Enemy") || other.CompareTag("EnemyBullet")) && !_isInvulnerable)
         {
-            _playerHealthRef.TakeDamage(1);
+            _playerHealthRef.TakeDamage(other.GetComponent<Ennemy>().GetAttack());
             _isInvulnerable = true;
+            Invoke(nameof(ResetInvulnerability), 1.5f);
         }
     }
 }

@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         _body = GetComponent<Rigidbody>();
+        Invoke(nameof(BulletDeath), 2.0f);
     }
 
     // Update is called once per frame
@@ -33,8 +34,13 @@ public class Bullet : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                Destroy(gameObject);
+                other.gameObject.GetComponent<Ennemy>().TakeDamage(2);
             }
         }
+    }
+
+    void BulletDeath()
+    {
+        Destroy(gameObject);
     }
 }

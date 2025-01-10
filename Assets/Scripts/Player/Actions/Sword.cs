@@ -20,7 +20,6 @@ public class Sword : MonoBehaviour
     {
         _playerBodyRef = transform.parent.GetComponent<CapsuleCollider>();
         _damageArea = gameObject.GetComponent<BoxCollider>();
-        Destroy(gameObject, 3f);
     }
 
     // Update is called once per frame
@@ -39,7 +38,7 @@ public class Sword : MonoBehaviour
         if (_allEnemies.Count <= 0) return;
         foreach (var curEnemy in _allEnemies)
         {
-            print("Attack Worked and hit " + curEnemy.name + " successfully.");
+            curEnemy.GetComponent<Ennemy>().TakeDamage(1);
         }
     }
 

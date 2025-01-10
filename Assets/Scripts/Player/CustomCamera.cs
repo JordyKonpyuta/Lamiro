@@ -111,6 +111,11 @@ public class CustomCamera : MonoBehaviour
         {
             SetRoomDataBig(entrance, enum_Sides.Sides.West);
         }
+        foreach(Ennemy curEnemy in _playerBodyRef.gameObject.GetComponent<AllPlayerReferences>().allEnemies)
+        {
+            curEnemy.ResetStatus();
+        }
+        
     }
 
     public void GoRoomRight(bool bBigRoom, Vector2 entrance)
@@ -124,6 +129,10 @@ public class CustomCamera : MonoBehaviour
         if (bIsBigRoom)
         {
             SetRoomDataBig(entrance, enum_Sides.Sides.East);
+        }
+        foreach(Ennemy curEnemy in _playerBodyRef.gameObject.GetComponent<AllPlayerReferences>().allEnemies)
+        {
+            curEnemy.ResetStatus();
         }
     }
 
@@ -139,6 +148,10 @@ public class CustomCamera : MonoBehaviour
         {
             SetRoomDataBig(entrance, enum_Sides.Sides.North);
         }
+        foreach(Ennemy curEnemy in _playerBodyRef.gameObject.GetComponent<AllPlayerReferences>().allEnemies)
+        {
+            curEnemy.ResetStatus();
+        }
     }
 
     public void GoRoomBottom(bool bBigRoom, Vector2 entrance)
@@ -152,6 +165,10 @@ public class CustomCamera : MonoBehaviour
         if (bBigRoom)
         {
             SetRoomDataBig(entrance, enum_Sides.Sides.South);
+        }
+        foreach(Ennemy curEnemy in _playerBodyRef.gameObject.GetComponent<AllPlayerReferences>().allEnemies)
+        {
+            curEnemy.ResetStatus();
         }
     }
 }

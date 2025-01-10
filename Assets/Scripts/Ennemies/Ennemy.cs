@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -14,6 +15,7 @@ public class Ennemy : MonoBehaviour
     private int _maxHealth = 5;
     private int _attack = 1;
     private bool _isAttacking = false;
+    private bool _isDead = false;
     
     public bool isStunned = false;
     public float _stunDuration = 3.0f;
@@ -21,10 +23,13 @@ public class Ennemy : MonoBehaviour
     // AI
     public NavMeshAgent navMesh;
     public GameObject player;
+    private NavMeshPath _navMeshPath;
 
     public Vector3 walkPoint;
+    private Vector3 _originalPos;
     public float walkPointRange;
     private bool _walkPointSet;
+    private bool _detectedPlayer;
 
     public float cooldownAttack;
 
@@ -56,6 +61,10 @@ public class Ennemy : MonoBehaviour
     private void Start()
     {
         _health = _maxHealth;
+        _navMeshPath = new NavMeshPath();
+        _originalPos = transform.position;
+        
+        Invoke(nameof(CheckForPlayer), 0.25f);
     }
 
     private void Update()
@@ -66,11 +75,21 @@ public class Ennemy : MonoBehaviour
             {
                 //AttackPlayer();
             }
-            else ChasePlayer();
+            else if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && _detectedPlayer) 
+                ChasePlayer();
+            else WalkBackToSpawn();
         }
-        else Patrol();
+        else
+        {
+            if (_detectedPlayer)
+            {
+                _detectedPlayer = false;
+                navMesh.SetDestination(_originalPos);
+                CheckForPlayer();
+            }
+        }
     }
-
+    
     private void Patrol()
     {
         if (!_walkPointSet)
@@ -92,14 +111,48 @@ public class Ennemy : MonoBehaviour
     // If the ennemy see the player
     private void ChasePlayer()
     {
-        if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom)
-            navMesh.SetDestination(player.transform.position);
         // Mushrooms only chase if they are attacked
-        else if (_health < _maxHealth)
+        if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom || _health < _maxHealth)
+        {
             navMesh.SetDestination(player.transform.position);
+            if (navMesh.pathStatus != NavMeshPathStatus.PathComplete)
+            {
+                _detectedPlayer = false;
+                print("YE");
+            }
+            else
+                _detectedPlayer = true;
+        }
+        else if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth)
+            Patrol();
+    }
+    
+    // If the enemy doesn't see the player
+    private void WalkBackToSpawn()
+    {
+        if (!_detectedPlayer) return;
+        
+        navMesh.SetDestination(_originalPos);
+        _detectedPlayer = false;
+        CheckForPlayer();
+        ResetStatus();
+    }
+    
+    // If No Path : check if there's a player nearby and available
+    private void CheckForPlayer()
+    {
+        navMesh.SetDestination(player.transform.position);
+        if (navMesh.pathStatus != NavMeshPathStatus.PathComplete)
+        {
+            Invoke(nameof(CheckForPlayer), 0.25f);
+            navMesh.SetDestination(_originalPos);
+        }
+        else
+        {
+            _detectedPlayer = true;
+        }
     }
 
-    
     // Attack Events
     private void AttackPlayer()
     {
@@ -152,7 +205,36 @@ public class Ennemy : MonoBehaviour
         _health -= damage;
         if (_health <= 0)
         {
-            Destroy(this);
+            Death();
         }
+    }
+
+    private void Death()
+    {
+        _attack = 0;
+        _isDead = true;
+        player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
+        navMesh.Warp(new Vector3(100, 0, 100));
+    }
+
+    public void ResetStatus()
+    {
+        _health = _maxHealth;
+        _attack = 1;
+        if (_isDead) navMesh.Warp(_originalPos);
+        _isDead = false;
+    }
+    
+    
+    // GETTER 
+
+    public int GetAttack()
+    {
+        return _attack;
+    }
+
+    public void SetAttack(int attack)
+    {
+        _attack = attack;
     }
 }
