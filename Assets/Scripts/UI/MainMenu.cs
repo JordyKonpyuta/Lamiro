@@ -13,7 +13,6 @@ public class MainMenu : MonoBehaviour
     public Dropdown qualityDropdown;
 
     public string levelToLoad;
-
     private void Start()
     {
         SetVolume();
@@ -26,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     public void SettingsButton()
     {
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        settingsPanel.GetComponent<Animator>().SetBool("IsOpen", !settingsPanel.GetComponent<Animator>().GetBool("IsOpen"));
     }
 
     public void ExitButton()
