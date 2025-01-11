@@ -14,7 +14,7 @@ public class Ennemy : MonoBehaviour
     private int _health = 5;
     private int _maxHealth = 5;
     private int _attack = 1;
-    private bool _isAttacking = false;
+    public bool isAttacking = false;
     private bool _isDead = false;
     
     public bool isStunned = false;
@@ -31,8 +31,10 @@ public class Ennemy : MonoBehaviour
     private bool _walkPointSet;
     private bool _detectedPlayer;
 
+        // Attack AI
     public float cooldownAttack;
-
+    private EnemyAttack _possibleAttackPatterns;
+    
     public float sightRange = 20, attackRange = 5;
     
 
@@ -63,6 +65,7 @@ public class Ennemy : MonoBehaviour
         _health = _maxHealth;
         _navMeshPath = new NavMeshPath();
         _originalPos = transform.position;
+        _possibleAttackPatterns = transform.GetComponent<EnemyAttack>();
         
         Invoke(nameof(CheckForPlayer), 0.25f);
     }
@@ -73,11 +76,11 @@ public class Ennemy : MonoBehaviour
         {
             if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
             {
-                //AttackPlayer();
+                AttackPlayer();
             }
-            else if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && _detectedPlayer) 
+            else if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && _detectedPlayer && !isAttacking) 
                 ChasePlayer();
-            else WalkBackToSpawn();
+            else if (!isAttacking) WalkBackToSpawn();
         }
         else
         {
@@ -118,7 +121,6 @@ public class Ennemy : MonoBehaviour
             if (navMesh.pathStatus != NavMeshPathStatus.PathComplete)
             {
                 _detectedPlayer = false;
-                print("YE");
             }
             else
                 _detectedPlayer = true;
@@ -156,20 +158,12 @@ public class Ennemy : MonoBehaviour
     // Attack Events
     private void AttackPlayer()
     {
-        navMesh.SetDestination(transform.position);
-        transform.LookAt(player.transform);
-        
-        if (!_isAttacking)
+        if (!isAttacking)
         {
-            _isAttacking = true;
-            player.GetComponent<PlayerHealth>().TakeDamage(_attack);
-            Invoke(nameof(ResetAttack), cooldownAttack);
+            navMesh.SetDestination(transform.position);
+            transform.LookAt(player.transform);
+            _possibleAttackPatterns.BasicAttackBegin();
         }
-    }
-
-    private void ResetAttack()
-    {
-        _isAttacking = false;
     }
 
     // Set Mesh depending on an index

@@ -5101,8 +5101,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2080412382024912662}
+  - component: {fileID: 4386858618735353285}
   - component: {fileID: 7863637057783086424}
   - component: {fileID: 5921938371498269018}
+  - component: {fileID: 6909411338974963959}
   - component: {fileID: 1331068631312370123}
   m_Layer: 0
   m_Name: Ennemy
@@ -5130,6 +5132,33 @@ Transform:
   - {fileID: 8450447636492288929}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &4386858618735353285
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7742184609685382126}
+  serializedVersion: 4
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!135 &7863637057783086424
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5169,6 +5198,7 @@ MonoBehaviour:
   - {fileID: 3032476292746249920}
   - {fileID: 6429995618479539488}
   - {fileID: 8450447636492288929}
+  isAttacking: 0
   isStunned: 0
   _stunDuration: 0
   navMesh: {fileID: 0}
@@ -5178,6 +5208,19 @@ MonoBehaviour:
   cooldownAttack: 0
   sightRange: 20
   attackRange: 5
+--- !u!114 &6909411338974963959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7742184609685382126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdaa25f579acc54fae06b4cda8df703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllInBox: []
 --- !u!195 &1331068631312370123
 NavMeshAgent:
   m_ObjectHideFlags: 0
