@@ -42,6 +42,29 @@ public class EnemyAttack : MonoBehaviour
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
     }
 
+    public void SpiderStrikeBegins()
+    {
+        if (!_linkedEnemy.isAttacking)
+        {
+            Invoke(nameof(SpiderStrike), 0.5f);
+            _linkedEnemy.isAttacking = true;
+        }
+    }
+
+    void SpiderStrike()
+    {
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 1f);
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 3.0f;
+        Invoke(nameof(SpiderStrikeEnds), 1f);
+    }
+
+    void SpiderStrikeEnds()
+    {
+        _linkedEnemy.isAttacking = false;
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 0f);
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 1.0f;
+    }
+
     public void BossRushBegin()
     {
         if (!_linkedEnemy.isAttacking)
@@ -62,6 +85,7 @@ public class EnemyAttack : MonoBehaviour
     {
         _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
+        _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 0f, 3f);
     }
 
     

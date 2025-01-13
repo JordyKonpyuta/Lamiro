@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -24,6 +25,7 @@ public class Ennemy : MonoBehaviour
     public NavMeshAgent navMesh;
     public GameObject player;
     private NavMeshPath _navMeshPath;
+    private Rigidbody _rigidbody;
 
     public Vector3 walkPoint;
     private Vector3 _originalPos;
@@ -34,6 +36,7 @@ public class Ennemy : MonoBehaviour
         // Attack AI
     public float cooldownAttack;
     private EnemyAttack _possibleAttackPatterns;
+    private float _bossRNGAttack = 0f;
     
     public float sightRange = 20, attackRange = 5;
     
@@ -42,22 +45,33 @@ public class Ennemy : MonoBehaviour
     {
         player = GameObject.Find("Player"); 
         navMesh = GetComponent<NavMeshAgent>();
+        _rigidbody = GetComponent<Rigidbody>();
         
         switch (ennemyType)
         {
             case Enum_EnnemyTypes.EnnemyTypes.Mushroom :
                 ActivateMesh(0);
+                navMesh.speed = 2.5f;
+                _maxHealth = 5;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit :
                 ActivateMesh(1);
+                navMesh.speed = 6.5f;
+                attackRange = 8;
+                _maxHealth = 50;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Slime :
                 ActivateMesh(2);
+                _maxHealth = 8;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Spider :
                 ActivateMesh(3);
+                attackRange = 2.5f;
+                navMesh.speed = 4.5f;
+                _maxHealth = 7;
                 break;
         }
+        _health = _maxHealth;
     }
 
     private void Start()
@@ -67,21 +81,23 @@ public class Ennemy : MonoBehaviour
         _originalPos = transform.position;
         _possibleAttackPatterns = transform.GetComponent<EnemyAttack>();
         
-        Invoke(nameof(CheckForPlayer), 0.25f);
+        Invoke(nameof(CheckForPlayer), 1f);
+        navMesh.destination = _originalPos;
     }
 
     private void Update()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= sightRange)
+        if (_detectedPlayer && !_isDead)
         {
-            if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
-            {
+            if ((   _bossRNGAttack > 85f && ennemyType == Enum_EnnemyTypes.EnnemyTypes.Rabbit && !isAttacking) 
+                || (Vector3.Distance(player.transform.position, transform.position) <= attackRange && !isAttacking)
+                && !(ennemyType == Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth))
                 AttackPlayer();
-            }
-            else if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && _detectedPlayer && !isAttacking) 
+            else if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && _detectedPlayer && !isAttacking)
                 ChasePlayer();
             else if (!isAttacking) WalkBackToSpawn();
         }
+        
         else
         {
             if (_detectedPlayer)
@@ -90,9 +106,10 @@ public class Ennemy : MonoBehaviour
                 navMesh.SetDestination(_originalPos);
                 CheckForPlayer();
             }
+
         }
     }
-    
+
     private void Patrol()
     {
         if (!_walkPointSet)
@@ -104,11 +121,15 @@ public class Ennemy : MonoBehaviour
                 transform.position.z + randomZ);
             _walkPointSet = true;
         }
-
-        else navMesh.SetDestination(walkPoint);
+        else
+        {
+            navMesh.SetDestination(walkPoint);
+            print ("Position = " + transform.position + "; Destination = " + walkPoint);
+        }
 
         if (Vector3.Distance(transform.position, walkPoint) <= 2)
             _walkPointSet = false;
+        
     }
 
     // If the ennemy see the player
@@ -118,17 +139,12 @@ public class Ennemy : MonoBehaviour
         if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom || _health < _maxHealth)
         {
             navMesh.SetDestination(player.transform.position);
-            if (navMesh.pathStatus != NavMeshPathStatus.PathComplete)
-            {
-                _detectedPlayer = false;
-            }
-            else
-                _detectedPlayer = true;
         }
-        else if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth)
+        else if (ennemyType == Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth)
             Patrol();
+        
     }
-    
+
     // If the enemy doesn't see the player
     private void WalkBackToSpawn()
     {
@@ -143,16 +159,39 @@ public class Ennemy : MonoBehaviour
     // If No Path : check if there's a player nearby and available
     private void CheckForPlayer()
     {
-        navMesh.SetDestination(player.transform.position);
-        if (navMesh.pathStatus != NavMeshPathStatus.PathComplete)
+        if (navMesh.CalculatePath(player.transform.position, _navMeshPath))
         {
-            Invoke(nameof(CheckForPlayer), 0.25f);
-            navMesh.SetDestination(_originalPos);
+            if (_navMeshPath.status == NavMeshPathStatus.PathComplete)
+            {
+                navMesh.SetDestination(player.transform.position);
+            }
+        }
+
+        Invoke(nameof(CheckForPlayerTrue), 0.25f);
+    }
+
+    private void CheckForPlayerTrue()
+    {
+        if (navMesh.pathStatus == NavMeshPathStatus.PathComplete && (Math.Abs(navMesh.destination.x - _originalPos.x) > 0.2 || Math.Abs(navMesh.destination.z - _originalPos.z) > 0.2))
+        {
+            if (!_detectedPlayer)
+            {
+                if (ennemyType == Enum_EnnemyTypes.EnnemyTypes.Rabbit)
+                    InvokeRepeating(nameof(ChanceForRush), 3f, 3f);
+                _detectedPlayer = true;
+            }
         }
         else
         {
-            _detectedPlayer = true;
+            if (_detectedPlayer)
+            {
+                _detectedPlayer = false;
+                CancelInvoke(nameof(ChanceForRush));
+            }
+            navMesh.SetDestination(_originalPos);
         }
+        
+        Invoke(nameof(CheckForPlayer), 0.25f);
     }
 
     // Attack Events
@@ -162,8 +201,36 @@ public class Ennemy : MonoBehaviour
         {
             navMesh.SetDestination(transform.position);
             transform.LookAt(player.transform);
-            _possibleAttackPatterns.BasicAttackBegin();
+            switch (ennemyType)
+            {
+                default:
+                    _possibleAttackPatterns.BasicAttackBegin();
+                    break;
+                case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
+                    if (_bossRNGAttack > 85f)
+                    {
+                        StopRNGForNow();
+                        _possibleAttackPatterns.BossRushBegin();
+                    }
+                    else
+                        _possibleAttackPatterns.BasicAttackBegin();
+                    break;
+                case Enum_EnnemyTypes.EnnemyTypes.Spider:
+                    _possibleAttackPatterns.SpiderStrikeBegins();
+                    break;
+            }
         }
+    }
+
+    public void ChanceForRush()
+    {
+        _bossRNGAttack = Random.Range(0f, 100f);
+        print(_bossRNGAttack);
+    }
+
+    public void StopRNGForNow()
+    {
+        CancelInvoke(nameof(ChanceForRush));
     }
 
     // Set Mesh depending on an index
@@ -208,15 +275,20 @@ public class Ennemy : MonoBehaviour
         _attack = 0;
         _isDead = true;
         player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
-        navMesh.Warp(new Vector3(100, 0, 100));
+        navMesh.Warp(new Vector3(0, -50, 0));
+        _rigidbody.useGravity = false;
+        navMesh.SetDestination(new Vector3(0, -50, 0));
     }
 
+    // Left the Room
     public void ResetStatus()
     {
         _health = _maxHealth;
         _attack = 1;
         if (_isDead) navMesh.Warp(_originalPos);
         _isDead = false;
+        _rigidbody.useGravity = true;
+        StopRNGForNow(); 
     }
     
     

@@ -57,7 +57,6 @@ public class CustomCamera : MonoBehaviour
                 25.0f,
                 Mathf.Clamp(_playerBodyRef.transform.position.z - 6, _bigRoomBottomLeft.y, _bigRoomTopRight.y)
             );
-            print(trueCameraPosition);
         }
         
         _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, trueCameraPosition, ref _camVelocity, 0.1f);
