@@ -4,12 +4,12 @@ using System.Collections;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int screws;
+    public int spaceshipPieces = 0;
+    public float timer = 0;
     
     // Singleton to be accessible anywhere
     
     private static Inventory _instance;
-    
-    public int spaceshipPieces = 0;
 
     public static Inventory Instance
     {
@@ -27,6 +27,14 @@ public class Inventory : MonoBehaviour
     void Awake()
     {
         _instance = this;
+    }
+
+    void Update()
+    {
+        while (spaceshipPieces < 5)
+        {
+            timer += Time.deltaTime;
+        }
     }
     
     // Getters

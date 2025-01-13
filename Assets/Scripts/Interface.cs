@@ -13,7 +13,7 @@ public class Interface : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Interact"))
         {
             Ray r = new Ray(interactorSource.position, interactorSource.forward);
             if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))

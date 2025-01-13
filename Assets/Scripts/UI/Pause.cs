@@ -4,9 +4,30 @@ using UnityEngine.UI;
 
 public class Pause : MonoBehaviour
 {
-
-    public string mainMenu;
+    
     public Text spaceshipPiecesText;
+    
+    // Singleton to be accessible anywhere
+    
+    private static Pause _instance;
+
+    public static Pause Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Player is null!");
+            }
+
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        _instance = this;
+    }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,7 +44,7 @@ public class Pause : MonoBehaviour
 
     public void QuitButton()
     {
-        SceneManager.LoadScene(mainMenu);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ResumeButton()

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour, IInteractable
 {
+    public GameObject menu;
+    
     public void Interact()
     {
         if (Inventory.Instance.spaceshipPieces < 5)
@@ -13,6 +15,7 @@ public class Spaceship : MonoBehaviour, IInteractable
         else
         {
             print("Congratulations !");
+            menu.SetActive(true);
         }
         
     }
