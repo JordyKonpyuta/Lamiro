@@ -6,8 +6,6 @@ public class Collectibles : MonoBehaviour
     public Enum_Collectibles.CollectibleType type;
 
     public Transform[] meshes;
-
-    public int spaceshipPieceIndex = 0;
     
     
     // Singleton to be accessible anywhere
@@ -76,7 +74,7 @@ public class Collectibles : MonoBehaviour
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
-                    other.gameObject.GetComponent<Inventory>().ObtainSpaceshipPiece(spaceshipPieceIndex);
+                    other.gameObject.GetComponent<Inventory>().spaceshipPieces++;
                     Destroy(gameObject);
                     break;
             }

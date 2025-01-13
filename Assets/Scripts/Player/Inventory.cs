@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour
     // Singleton to be accessible anywhere
     
     private static Inventory _instance;
+    
+    public int spaceshipPieces = 0;
 
     public static Inventory Instance
     {
@@ -27,8 +29,6 @@ public class Inventory : MonoBehaviour
         _instance = this;
     }
     
-    private bool[] _spaceshipPieces = { false, false, false, false, false };
-    
     // Getters
     public int GetScrews()
     {
@@ -41,27 +41,6 @@ public class Inventory : MonoBehaviour
     {
         screws++;
     }
-
-    public void ObtainSpaceshipPiece(int index)
-    {
-        _spaceshipPieces[index] = true;
-        VerifySpaceshipPiecesObtained();
-    }
     
-    // Verify if all Spaceship Pieces have been obtained
-    public void VerifySpaceshipPiecesObtained()
-    {
-        for (int i = 0; i < _spaceshipPieces.Length; i++)
-        {
-            if (_spaceshipPieces[i] == true)
-            {
-                if (i == _spaceshipPieces.Length)
-                {
-                    print("Congratulations !");
-                }
-            }
 
-            else break;
-        }
-    }
 }
