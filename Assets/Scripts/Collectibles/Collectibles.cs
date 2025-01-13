@@ -63,19 +63,20 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Gun;
-                    HUD.Instance.SetWeaponIcon(0);
+                    HUD.Instance.gunIcon.enabled = true;
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
                     Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Sword;
-                    HUD.Instance.SetWeaponIcon(0);
+                    HUD.Instance.swordIcon.enabled = true;
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
+                    HUD.Instance.jetpackIcon.enabled = true;
+                    Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
                     other.gameObject.GetComponent<Inventory>().ObtainSpaceshipPiece(spaceshipPieceIndex);
-                    HUD.Instance.spaceshipPiecesImages[spaceshipPieceIndex].gameObject.SetActive(true);
                     Destroy(gameObject);
                     break;
             }

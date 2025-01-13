@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +5,12 @@ public class HUD : MonoBehaviour
 {
     
     public Text screwsText;
-    public Image[] spaceshipPiecesImages;
-
-    // Images for the weapon Icon
-    public Image[] weaponIcons;
+    
+    // Images for inventory
+    public Image jetpackIcon;
+    public Image gunIcon;
+    public Image swordIcon;
+    
     
     // Images for Health
     public Image[] healthImages;
@@ -42,10 +43,13 @@ public class HUD : MonoBehaviour
         screwsText.text = "" + screws;
     }
 
-    // Set Weapon Icon
-    public void SetWeaponIcon(int index)
+    public void SetVisualHealth()
     {
-        weaponIcons[index].enabled = true;
+        for (int i = 0; i < PlayerHealth.Instance.GetHealth(); i++)
+        {
+            healthImages[i].enabled = true;
+        }
     }
+    
 
 }
