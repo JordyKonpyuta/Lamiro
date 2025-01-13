@@ -62,12 +62,12 @@ public class Collectibles : MonoBehaviour
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
-                    Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Gun;
+                    other.gameObject.GetComponent<Gun>().enabled = true;
                     HUD.Instance.gunIcon.enabled = true;
                     Destroy(gameObject);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
-                    Weapon.Instance.weaponEquipped = EnumWeapon.WeaponType.Sword;
+                    other.gameObject.GetComponent<Sword>().enabled = true;
                     HUD.Instance.swordIcon.enabled = true;
                     Destroy(gameObject);
                     break;

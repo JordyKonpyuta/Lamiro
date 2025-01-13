@@ -36,6 +36,15 @@ public class HUD : MonoBehaviour
         _instance = this;
     }
 
+    void Start()
+    {
+        jetpackIcon.enabled = false;
+        swordIcon.enabled = false;
+        gunIcon.enabled = false;
+        
+        SetVisualHealth();
+    }
+
     
     // Called when a screw is picked up
     public void UpdateScrewsText(int screws)
@@ -45,6 +54,10 @@ public class HUD : MonoBehaviour
 
     public void SetVisualHealth()
     {
+        foreach (Image image in healthImages)
+        {
+            image.enabled = false;
+        }
         for (int i = 0; i < PlayerHealth.Instance.GetHealth(); i++)
         {
             healthImages[i].enabled = true;
