@@ -11,7 +11,7 @@ public class Heal : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _playerBodyRef = transform.parent.GetComponent<CapsuleCollider>();
+        _playerBodyRef = transform.GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -26,6 +26,12 @@ public class Heal : MonoBehaviour
 
     private void Healing()
     {
-        
+        if (transform.GetComponent<Inventory>().GetScrews() >= 10 && transform.GetComponent<PlayerHealth>().GetHealth() < transform.GetComponent<PlayerHealth>().GetMaxHealth())
+        {
+            transform.GetComponent<PlayerHealth>().SetHealth(transform.GetComponent<PlayerHealth>().GetHealth() + 1);
+            transform.GetComponent<Inventory>().AddScrews(-10);
+            HUD.Instance.SetVisualHealth();
+            HUD.Instance.UpdateScrewsText(transform.GetComponent<Inventory>().GetScrews());
+        }
     }
 }

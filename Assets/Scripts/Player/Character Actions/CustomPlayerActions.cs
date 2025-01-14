@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class CustomPlayerActions : MonoBehaviour
 {
-    public float jumpForce = 10.0f;
     public float movementSpeed = 5.0f;
 
     private Rigidbody _body;
     private Vector3 _directionMove = Vector3.zero;
-    private bool _bIsGrounded = true;
-    private LayerMask _groundLayer;
     
     // Rotation
     private float newRot = 0;
@@ -26,16 +23,11 @@ public class CustomPlayerActions : MonoBehaviour
     void Start()
     {
         _body = GetComponent<Rigidbody>();
-        _groundLayer = LayerMask.NameToLayer("Ground");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Detect Ground
-        RaycastHit hitCast;
-        _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, _groundLayer);
-        
         // Movement Priorities Calculations
         if ((Input.GetAxis("Horizontal") > 0.01 || Input.GetAxis("Horizontal") < -0.01) && Math.Abs(Input.GetAxis("Horizontal")) >= Math.Abs(xToCheck) && Input.GetAxis("Horizontal") != 0)
         {
@@ -59,12 +51,6 @@ public class CustomPlayerActions : MonoBehaviour
         // Move
         _directionMove *= movementSpeed * Time.deltaTime;
         _body.MovePosition(transform.position + _directionMove);
-        
-        // Jump
-        if (_bIsGrounded && Input.GetButtonDown("Jump"))
-        {
-            _body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
         
         // Rotation
         int xToCheck2 = Input.GetAxis("Horizontal") > 0 ? 1 : -1;

@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _playerBodyRef = transform.parent.GetComponent<CapsuleCollider>();
+        _playerBodyRef = transform.GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame

@@ -40,9 +40,9 @@ public class Inventory : MonoBehaviour
     
     
     // Setters
-    public void AddScrews()
+    public void AddScrews(int amount)
     {
-        screws++;
+        screws += amount;
     }
     
 
