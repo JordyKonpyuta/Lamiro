@@ -283,6 +283,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   objectColor: 0
+  linkedInteractables: []
   meshes:
   - {fileID: 7980218762572500283}
   - {fileID: 6006231722673467852}

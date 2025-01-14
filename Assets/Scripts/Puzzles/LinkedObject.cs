@@ -27,11 +27,11 @@ public class LinkedObject : MonoBehaviour
         {
             case Enum_MushroomColors.Colors.Green :
                 SwitchColors(0);
-                Flatten();
+                Fatten();
                 break;
             case Enum_MushroomColors.Colors.Red :
                 SwitchColors(1);
-                Fatten();
+                Flatten();
                 break;
         }
     }
