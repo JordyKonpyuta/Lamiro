@@ -36,10 +36,6 @@ public class Bullet : MonoBehaviour
             {
                 other.gameObject.GetComponent<Ennemy>().TakeDamage(2);
             }
-            else if (other.gameObject.CompareTag("Interactable"))
-            {
-                other.gameObject.GetComponent<Interactable>().OnInteract();
-            }
         }
     }
 

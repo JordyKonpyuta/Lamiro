@@ -19,7 +19,7 @@ public class Ennemy : MonoBehaviour
     private bool _isDead = false;
     
     public bool isStunned = false;
-    private float _stunDuration = 5.0f;
+    public float _stunDuration = 3.0f;
 
     // AI
     public NavMeshAgent navMesh;
@@ -246,12 +246,13 @@ public class Ennemy : MonoBehaviour
     }
 
     // Stun Events
-
-    public void GetStunned()
+    public void IsStun()
     {
-        isStunned = true;
-        _possibleAttackPatterns.StunAttackLoss();
-        Invoke(nameof(ResetStun), _stunDuration);
+        if (isStunned)
+        {
+            print("Ouch");
+            Invoke(nameof(ResetStun), _stunDuration);
+        }
     }
 
     private void ResetStun()
@@ -262,21 +263,10 @@ public class Ennemy : MonoBehaviour
     // Damage Event
     public void TakeDamage(int damage)
     {
-        switch (ennemyType)
+        _health -= damage;
+        if (_health <= 0)
         {
-            default:
-                _health -= damage;
-                if (_health <= 0)
-                    Death();
-                break;
-            case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
-                if (isStunned)
-                {
-                    _health -= damage;
-                    if (_health <= 0)
-                        Destroy(gameObject);
-                }
-                break;
+            Death();
         }
     }
 
