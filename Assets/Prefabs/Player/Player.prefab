@@ -61,7 +61,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266323947073414944}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 545a3628c45a6ab4091a525304b7ac56, type: 3}
   m_Name: 
@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 7782587446366386458}
   - component: {fileID: 4191509816928185133}
   - component: {fileID: 2347534279843852095}
+  - component: {fileID: 2245442373300218504}
   - component: {fileID: 5146533841623325897}
   - component: {fileID: 8958778446130404118}
   m_Layer: 0
@@ -447,8 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b832ef012b2fd7488a4c0b893e22a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 200
-  movementSpeed: 35
+  movementSpeed: 5
 --- !u!114 &7782587446366386458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRef: {fileID: 0}
+  allEnemies: []
 --- !u!114 &4191509816928185133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,7 +470,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9213643916603760564}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d704f04209f7a9f409c4a403fa44f185, type: 3}
   m_Name: 
@@ -487,6 +488,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd2dfd452a7bae40a2c1cdad6aa0f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2245442373300218504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213643916603760564}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01c6750536d36d4bb6b00c57ba2d708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 500
 --- !u!114 &5146533841623325897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +514,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screws: 0
+  spaceshipPieces: 0
+  timer: 0
 --- !u!114 &8958778446130404118
 MonoBehaviour:
   m_ObjectHideFlags: 0
