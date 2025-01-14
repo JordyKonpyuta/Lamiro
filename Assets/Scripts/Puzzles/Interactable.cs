@@ -31,7 +31,7 @@ public class Interactable : MonoBehaviour
                 objectColor = Enum_MushroomColors.Colors.Green;
                 linkedInteractables = Resources.FindObjectsOfTypeAll<Interactable>();
                 linkedObjects = Resources.FindObjectsOfTypeAll<LinkedObject>();
-                meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.3254717f, 1f, 0.3470062f);
+                meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.1254717f, 1f, 0.3470062f);
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 ActivateMesh(3);
@@ -88,7 +88,7 @@ public class Interactable : MonoBehaviour
         if (objectColor == Enum_MushroomColors.Colors.Green)
             meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 0.3470062f, 0.3254717f);
         else
-            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.3254717f, 1f, 0.3470062f);
+            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.1254717f, 1f, 0.3470062f);
         
         objectColor = objectColor == Enum_MushroomColors.Colors.Green ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Green;
             
