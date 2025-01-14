@@ -1,35 +1,31 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class EndGame : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
-    public Text scoreText;
-    public Image rank;
-
-    public Sprite[] rankImages;
-
     public AudioResource popUpSound;
-
-    private int score;
-
-    void Start()
+    
+    private void Start()
     {
         MusicManager.Instance.StopSound();
-        CalculateScore();
+        Animation();
         PlaySound(popUpSound);
     }
 
-    public void CalculateScore()
+    public void RestartButton()
     {
-        score += Inventory.Instance.GetScrews();
-        scoreText.text = "Score : " + score;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void MenuButton()
+    public void QuitButton()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Animation()
+    {
+        GetComponent<Animator>().SetBool("IsOpen", !GetComponent<Animator>().GetBool("IsOpen"));
     }
 
     public void PlaySound(AudioResource audio)
@@ -37,5 +33,4 @@ public class EndGame : MonoBehaviour
         gameObject.GetComponent<AudioSource>().resource = audio;
         gameObject.GetComponent<AudioSource>().Play();
     }
-
 }

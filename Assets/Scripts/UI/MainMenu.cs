@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -50,5 +51,11 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("masterFullscreen", fullScreenToggle.isOn ? 1 : 0);
         Screen.fullScreen = fullScreenToggle.isOn;
+    }
+
+    public void PlaySound(AudioResource audio)
+    {
+        gameObject.GetComponent<AudioSource>().resource = audio;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 }

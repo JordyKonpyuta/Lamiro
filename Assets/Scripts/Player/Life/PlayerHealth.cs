@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerHealth : MonoBehaviour
 {
     private int _maxHealth = 3;
     private int _currentHealth = 3;
+
+    public AudioResource[] damageSounds;
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -62,8 +65,8 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int d)
     {
         _currentHealth -= d;
+        gameObject.GetComponent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
         print(_currentHealth);
-        //ProgressBar.Instance.SetBarPercentage(_currentHealth, _maxHealth);
         if (_currentHealth <= 0)
         {
             Death();

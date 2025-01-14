@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -6,6 +7,9 @@ public class Pause : MonoBehaviour
 {
     
     public Text spaceshipPiecesText;
+
+    public AudioResource popUpAudio;
+    public AudioResource popOutAudio;
     
     // Singleton to be accessible anywhere
     
@@ -32,6 +36,8 @@ public class Pause : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        MusicManager.Instance.StopSound();
+        PlaySound(popUpAudio);
         Animation();
         Time.timeScale = 0;
         spaceshipPiecesText.text = "Spaceship Pieces : " + Inventory.Instance.spaceshipPieces;
@@ -51,6 +57,14 @@ public class Pause : MonoBehaviour
     {
         Time.timeScale = 1;
         Animation();
+        PlaySound(popOutAudio);
+        MusicManager.Instance.PlaySound();
+    }
+
+    public void PlaySound(AudioResource audio)
+    {
+        gameObject.GetComponent<AudioSource>().resource = audio;
+        gameObject.GetComponent<AudioSource>().Play();
     }
     
     
