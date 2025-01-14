@@ -17,6 +17,6 @@ public class Spaceship : MonoBehaviour, IInteractable
             print("Congratulations !");
             menu.SetActive(true);
         }
-        
+       
     }
 }

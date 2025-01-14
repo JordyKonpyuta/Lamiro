@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,9 +7,7 @@ public class LinkedObject : MonoBehaviour
     public Enum_LinkedObjectsType.LinkedObjectType objectType;
     public Enum_MushroomColors.Colors objectColor;
 
-    private bool _isHidden = false;
-
-    private GameObject _linkedObject;
+    private bool _isFlat = false;
 
     public Transform[] meshes;
 
@@ -16,59 +15,97 @@ public class LinkedObject : MonoBehaviour
     private Vector3 _targetPositionDown;
 
     private Ennemy _ennemyRef;
+    
+    public List<Material> materials;
+    private Color BaseColor;
 
     private void Awake()
     {
         _targetPositionUp = transform.position;
         _targetPositionDown = new Vector3(transform.position.x, transform.position.y - 50, transform.position.z);
-        ActivateMesh(0);
         switch (objectColor)
         {
-            case Enum_MushroomColors.Colors.Blue :
-                meshes[0].gameObject.GetComponent<Material>().SetColor(1, Color.blue);
+            case Enum_MushroomColors.Colors.Green :
+                SwitchColors(0);
+                Flatten();
                 break;
             case Enum_MushroomColors.Colors.Red :
-                meshes[0].gameObject.GetComponent<Material>().SetColor(1, Color.red);
+                SwitchColors(1);
+                Fatten();
                 break;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ennemy"))
+        if (other.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<Ennemy>().isStunned = true;
-            other.gameObject.GetComponent<Ennemy>().IsStun();
+            if (other.gameObject.GetComponent<Ennemy>().isAttacking)
+            {
+                other.gameObject.GetComponent<Ennemy>().GetStunned();
+            }
         }
     }
     
 
     public void Interaction()
     {
-        if (_isHidden)
+        if (_isFlat)
         {
+            /*
             _linkedObject.GetComponent<BoxCollider>().enabled = true;
             transform.position = Vector3.MoveTowards(transform.position, _targetPositionUp, 0.5f);
-            _isHidden = false;
+            _isFlat = false;
+            */
+            print("TEST FAT");
+            Fatten();
         }
         
         else
         {
+            /*
             _linkedObject.GetComponent<BoxCollider>().enabled = false;
             transform.position = Vector3.MoveTowards(transform.position, _targetPositionDown, 0.5f);
-            _isHidden = true;
+            _isFlat = true;
+            */
+            print("TEST FLAT");
+            Flatten();
         }
-        
     }
 
-    private void ActivateMesh(int index)
+    public void SwitchColors(int index)
     {
-        for (int i = 0; i < meshes.Length; i++)
-        {
-            if (i == index)
-                meshes[i].gameObject.SetActive(true);
-            else
-                meshes[i].gameObject.SetActive(false);
-        }
+        meshes[0].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        meshes[1].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        meshes[2].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        meshes[3].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        meshes[4].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        BaseColor = materials[index].color;
+    }
+
+    public void Flatten()
+    {
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
+        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 0.1f, gameObject.transform.localScale.z);
+        meshes[0].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        meshes[1].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        meshes[2].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        meshes[3].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        meshes[4].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+        _isFlat = true;
+    }
+
+    public void Fatten()
+    {
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 2f, gameObject.transform.position.z);
+        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 1f, gameObject.transform.localScale.z);
+        meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        meshes[1].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        meshes[3].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+        _isFlat = false;
     }
 }

@@ -5102,7 +5102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080412382024912662}
   - component: {fileID: 4386858618735353285}
-  - component: {fileID: 7863637057783086424}
+  - component: {fileID: 6288210233087533599}
   - component: {fileID: 5921938371498269018}
   - component: {fileID: 6909411338974963959}
   - component: {fileID: 1331068631312370123}
@@ -5159,8 +5159,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &7863637057783086424
-SphereCollider:
+--- !u!136 &6288210233087533599
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5177,9 +5177,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &5921938371498269018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5192,7 +5194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88502885b0f51b94f8566045914af666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemyType: 1
+  ennemyType: 0
   meshes:
   - {fileID: 4482520973744514363}
   - {fileID: 3032476292746249920}
@@ -5200,11 +5202,10 @@ MonoBehaviour:
   - {fileID: 8450447636492288929}
   isAttacking: 0
   isStunned: 0
-  _stunDuration: 0
   navMesh: {fileID: 0}
   player: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 0
+  walkPointRange: 15
   cooldownAttack: 0
   sightRange: 20
   attackRange: 5
