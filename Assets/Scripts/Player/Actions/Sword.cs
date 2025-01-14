@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Sword : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class Sword : MonoBehaviour
     
     // All Booleans
     private bool _canAttack = true;
+    
+    // Audio
+    public AudioResource[] swordSounds;
+    private AudioSource _audioSource;
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -39,19 +44,38 @@ public class Sword : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        _audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
     private void SwordAttack()
     {
-        if (_allEnemies == null && _allInteractables == null) return;
-        if (_allEnemies.Count <= 0 && _allInteractables.Count <= 0) return;
+        if (_allEnemies == null && _allInteractables == null)
+        {
+            PlaySound(0);
+            return;
+        }
+
+        if (_allEnemies.Count <= 0 && _allInteractables.Count <= 0)
+        {
+            PlaySound(0);
+            return;
+        }
         foreach (var curEnemy in _allEnemies)
         {
             curEnemy.GetComponent<Ennemy>().TakeDamage(1);
+            PlaySound(1);
         }
         foreach (var curInteractable in _allInteractables)
         {
             curInteractable.OnInteract();
             if (curInteractable.CompareTag("Grass"))
+            {
                 _allRemovedInteractables.Add(curInteractable);
+                PlaySound(UnityEngine.Random.Range(2,4));
+            }
+                
         }
         if (_allRemovedInteractables.Count > 0)
             Invoke(nameof(RemoveFromInteractable), 0.05f);
@@ -92,5 +116,11 @@ public class Sword : MonoBehaviour
         {
             _allInteractables.Remove(other.gameObject.GetComponent<Interactable>());
         }
+    }
+
+    private void PlaySound(int index)
+    {
+        _audioSource.resource = swordSounds[index];
+        _audioSource.Play();
     }
 }

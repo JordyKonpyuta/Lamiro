@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Gun : MonoBehaviour
 {
@@ -6,6 +8,9 @@ public class Gun : MonoBehaviour
     private CapsuleCollider _playerBodyRef;
 
     private bool _canAttack = true;
+
+    public AudioResource[] bulletSounds;
+    private AudioSource _audioSource;
     
     // -------------------- //
     //       FUNCTIONS      //
@@ -15,6 +20,11 @@ public class Gun : MonoBehaviour
     void Start()
     {
         _playerBodyRef = transform.GetComponent<CapsuleCollider>();
+    }
+
+    private void Awake()
+    {
+        _audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,5 +47,12 @@ public class Gun : MonoBehaviour
     private void GunAttack()
     {
         Instantiate(bulletPrefab, transform.position + transform.forward * 0.25f, transform.rotation);
+        PlaySound();
+    }
+
+    private void PlaySound()
+    {
+        _audioSource.resource = bulletSounds[UnityEngine.Random.Range(0, bulletSounds.Length - 1)];
+        _audioSource.Play();
     }
 }

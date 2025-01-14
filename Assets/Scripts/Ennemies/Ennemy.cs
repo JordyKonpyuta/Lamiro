@@ -1,8 +1,7 @@
 using System;
-using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 public class Ennemy : MonoBehaviour
@@ -10,6 +9,10 @@ public class Ennemy : MonoBehaviour
     public Enum_EnnemyTypes.EnnemyTypes ennemyType;
 
     public Transform[] meshes;
+    
+    // Audio
+    public AudioResource deathSound;
+    private AudioSource _audioSource;
 
     // Stats
     private int _health = 5;
@@ -46,6 +49,8 @@ public class Ennemy : MonoBehaviour
         player = GameObject.Find("Player"); 
         navMesh = GetComponent<NavMeshAgent>();
         _rigidbody = GetComponent<Rigidbody>();
+
+        _audioSource = gameObject.GetComponent<AudioSource>();
         
         switch (ennemyType)
         {
@@ -299,6 +304,13 @@ public class Ennemy : MonoBehaviour
         _isDead = false;
         _rigidbody.useGravity = true;
         StopRNGForNow(); 
+    }
+    
+    // Sound Player
+    private void PlaySound()
+    {
+        _audioSource.resource = deathSound;
+        _audioSource.Play();
     }
     
     

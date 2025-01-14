@@ -1,11 +1,17 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class EnemyAttack : MonoBehaviour
 {
     public List<GameObject> AllInBox;
     private Ennemy _linkedEnemy;
+    
+    // Audio
+    public AudioResource[] attackSounds;
+    private AudioSource _audioSource;
 
     private Vector3 _forceForRush;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,10 +20,9 @@ public class EnemyAttack : MonoBehaviour
         _linkedEnemy = gameObject.GetComponent<Ennemy>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-
+        _audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     public void BasicAttackBegin()
