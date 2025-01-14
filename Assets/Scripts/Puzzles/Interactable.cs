@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
     public Enum_InteractableTypes.InteractableType objectType;
-    private LinkedObject[] linkedObjects;
-    private Enum_MushroomColors.Colors objectColor;
+    private LinkedObject[] _linkedObjects;
+    private Enum_MushroomColors.Colors _objectColor;
     public Interactable[] linkedInteractables;
 
     public Transform[] meshes;
@@ -28,10 +29,10 @@ public class Interactable : MonoBehaviour
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
                 ActivateMesh(2);
-                objectColor = Enum_MushroomColors.Colors.Green;
+                _objectColor = Enum_MushroomColors.Colors.Green;
                 linkedInteractables = Resources.FindObjectsOfTypeAll<Interactable>();
-                linkedObjects = Resources.FindObjectsOfTypeAll<LinkedObject>();
-                meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.1254717f, 1f, 0.3470062f);
+                _linkedObjects = Resources.FindObjectsOfTypeAll<LinkedObject>();
+                meshes[2].gameObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(0.1254717f, 1f, 0.3470062f);
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 ActivateMesh(3);
@@ -47,12 +48,11 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Crate :
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
-                print(linkedInteractables.Length);
-                if (linkedObjects.Length != 0)
+                if (_linkedObjects.Length != 0)
                 {
-                    for (int i = 0; i < linkedObjects.Length - 1; i++)
+                    for (int i = 0; i < _linkedObjects.Length - 1; i++)
                     {
-                        linkedObjects[i].Interaction();
+                        _linkedObjects[i].Interaction();
                     }
                 }
 
@@ -67,9 +67,9 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;
             case Enum_InteractableTypes.InteractableType.Grass :
+                Destroy(gameObject,0.1f);
                 break;
         }
-        print("Bim !");
     }
 
     private void ActivateMesh(int index)
@@ -85,12 +85,11 @@ public class Interactable : MonoBehaviour
 
     public void switchUpColors()
     {
-        if (objectColor == Enum_MushroomColors.Colors.Green)
-            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(1f, 0.3470062f, 0.3254717f);
+        if (_objectColor == Enum_MushroomColors.Colors.Green)
+            meshes[2].gameObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(1f, 0.3470062f, 0.3254717f);
         else
-            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.1254717f, 1f, 0.3470062f);
+            meshes[2].gameObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(0.1254717f, 1f, 0.3470062f);
         
-        objectColor = objectColor == Enum_MushroomColors.Colors.Green ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Green;
-            
+        _objectColor = _objectColor == Enum_MushroomColors.Colors.Green ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Green;
     }
 }

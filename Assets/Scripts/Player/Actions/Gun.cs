@@ -4,6 +4,8 @@ public class Gun : MonoBehaviour
 {
     public GameObject bulletPrefab;
     private CapsuleCollider _playerBodyRef;
+
+    private bool _canAttack = true;
     
     // -------------------- //
     //       FUNCTIONS      //
@@ -19,12 +21,19 @@ public class Gun : MonoBehaviour
     void Update()
     {
         // Gun
-        if (Input.GetButtonDown("GunAttack"))
+        if (Input.GetButtonDown("GunAttack") && _canAttack)
         {
             GunAttack();
+            _canAttack = false;
+            Invoke(nameof(ResetAttack), 5f);
         }
     }
 
+    private void ResetAttack()
+    {
+        _canAttack = true;
+    }    
+    
     private void GunAttack()
     {
         Instantiate(bulletPrefab, transform.position + transform.forward * 0.25f, transform.rotation);

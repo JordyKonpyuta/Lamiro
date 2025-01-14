@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - Interactable
+  - Grass
   layers:
   - Default
   - TransparentFX

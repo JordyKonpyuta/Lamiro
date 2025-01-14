@@ -277,12 +277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  linkedObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  objectColor: 0
   linkedInteractables: []
   meshes:
   - {fileID: 7980218762572500283}

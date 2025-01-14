@@ -52,23 +52,11 @@ public class LinkedObject : MonoBehaviour
     {
         if (_isFlat)
         {
-            /*
-            _linkedObject.GetComponent<BoxCollider>().enabled = true;
-            transform.position = Vector3.MoveTowards(transform.position, _targetPositionUp, 0.5f);
-            _isFlat = false;
-            */
-            print("TEST FAT");
             Fatten();
         }
         
         else
         {
-            /*
-            _linkedObject.GetComponent<BoxCollider>().enabled = false;
-            transform.position = Vector3.MoveTowards(transform.position, _targetPositionDown, 0.5f);
-            _isFlat = true;
-            */
-            print("TEST FLAT");
             Flatten();
         }
     }
