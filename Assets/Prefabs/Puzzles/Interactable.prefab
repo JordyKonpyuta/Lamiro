@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 6458842376729755943}
   - component: {fileID: 2059674773756315198}
   - component: {fileID: 12324105482948398}
+  - component: {fileID: 4895624805108305939}
   m_Layer: 0
   m_Name: Interactable
   m_TagString: Interactable
@@ -287,6 +288,27 @@ MonoBehaviour:
   - {fileID: 6006231722673467852}
   - {fileID: 7870881460556182611}
   - {fileID: 8988993363908936580}
+--- !u!135 &4895624805108305939
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7522427381241475329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.9
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7867902864623051309
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7870881460556182611
 Transform:
   m_ObjectHideFlags: 0

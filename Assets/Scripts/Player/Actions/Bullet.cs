@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -30,6 +31,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+                print(other.name);
         if (!other.gameObject.CompareTag("Player"))
         {
             if (other.gameObject.CompareTag("Enemy"))
@@ -39,6 +41,10 @@ public class Bullet : MonoBehaviour
             else if (other.gameObject.CompareTag("Interactable"))
             {
                 other.gameObject.GetComponent<Interactable>().OnInteract();
+            }
+            else if (other.gameObject.layer == 7)
+            {
+                Destroy(gameObject);
             }
         }
     }

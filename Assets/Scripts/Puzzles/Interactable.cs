@@ -51,8 +51,10 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Mushroom :
                 if (linkedObjects.Length != 0)
                 {
+                    print("test");
                     foreach (LinkedObject objects in linkedObjects)
                     {
+                        print("test2");
                         objects.Interaction();
                     }
                 }
