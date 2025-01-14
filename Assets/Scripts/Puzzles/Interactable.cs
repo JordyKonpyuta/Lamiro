@@ -27,8 +27,8 @@ public class Interactable : MonoBehaviour
                 ActivateMesh(2);
                 switch (objectColor)
                 {
-                    case Enum_MushroomColors.Colors.Blue :
-                        meshes[2].gameObject.GetComponent<Material>().SetColor(1, Color.blue);
+                    case Enum_MushroomColors.Colors.Green :
+                        meshes[2].gameObject.GetComponent<Material>().SetColor(1, Color.green);
                         break;
                     case Enum_MushroomColors.Colors.Red :
                         meshes[2].gameObject.GetComponent<Material>().SetColor(1, Color.red);
@@ -42,7 +42,7 @@ public class Interactable : MonoBehaviour
     }
 
     // Event Interaction
-    void OnInteract()
+    public void OnInteract()
     {
         switch (objectType)
         {
@@ -53,13 +53,10 @@ public class Interactable : MonoBehaviour
                 {
                     foreach (LinkedObject objects in linkedObjects)
                     {
-                        if (objects.objectColor == objectColor)
-                        {
-                            objects.Interaction();
-                        }
+                        objects.Interaction();
                     }
                 }
-                objectColor = objectColor == Enum_MushroomColors.Colors.Blue ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Blue;
+                objectColor = objectColor == Enum_MushroomColors.Colors.Green ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Green;
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;

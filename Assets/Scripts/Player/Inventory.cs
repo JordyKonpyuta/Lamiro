@@ -10,7 +10,6 @@ public class Inventory : MonoBehaviour
     // Singleton to be accessible anywhere
     
     private static Inventory _instance;
-
     public static Inventory Instance
     {
         get
@@ -23,7 +22,6 @@ public class Inventory : MonoBehaviour
             return _instance;
         }
     }
-
     void Awake()
     {
         _instance = this;
@@ -31,10 +29,7 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        while (spaceshipPieces < 5)
-        {
             timer += Time.deltaTime;
-        }
     }
     
     // Getters

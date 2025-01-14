@@ -40,6 +40,7 @@ public class EnemyAttack : MonoBehaviour
     {
         _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
+        _forceForRush = Vector3.zero;
     }
 
     public void SpiderStrikeBegins()
@@ -86,6 +87,26 @@ public class EnemyAttack : MonoBehaviour
         _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
         _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 0f, 3f);
+        _forceForRush = Vector3.zero;
+    }
+    
+    // Got Stunned?
+    public void StunAttackLoss()
+    {
+        CancelInvoke(nameof(_linkedEnemy.ChanceForRush));
+        CancelInvoke(nameof(BossRush));
+        CancelInvoke(nameof(BossRushEnds));
+        CancelInvoke(nameof(BasicAttack));
+        CancelInvoke(nameof(BasicAttackEnds));
+        CancelInvoke(nameof(SpiderStrike));
+        CancelInvoke(nameof(SpiderStrikeEnds));
+        
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 0f);
+        _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 1.0f;
+        _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
+        _forceForRush = Vector3.zero;
+        if (_linkedEnemy.ennemyType == Enum_EnnemyTypes.EnnemyTypes.Rabbit)
+            _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 5f, 3f);
     }
 
     
