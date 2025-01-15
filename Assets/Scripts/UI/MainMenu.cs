@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         SetVolume();
+        SetQuality();
+        SetFullScreen();
     }
 
     public void PlayButton()
