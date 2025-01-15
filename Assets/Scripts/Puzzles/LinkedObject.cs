@@ -17,6 +17,7 @@ public class LinkedObject : MonoBehaviour
     private Ennemy _ennemyRef;
     
     public List<Material> materials;
+    private Material _refMaterial;
     private Color BaseColor;
 
     private void Awake()
@@ -63,11 +64,16 @@ public class LinkedObject : MonoBehaviour
 
     public void SwitchColors(int index)
     {
-        meshes[0].gameObject.GetComponent<MeshRenderer>().material = materials[index];
-        meshes[1].gameObject.GetComponent<MeshRenderer>().material = materials[index];
-        meshes[2].gameObject.GetComponent<MeshRenderer>().material = materials[index];
-        meshes[3].gameObject.GetComponent<MeshRenderer>().material = materials[index];
-        meshes[4].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        if (meshes[0])
+            meshes[0].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        if (meshes[1])
+            meshes[1].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        if (meshes[2])
+            meshes[2].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        if (meshes[3])
+            meshes[3].gameObject.GetComponent<MeshRenderer>().material = materials[index];
+        if (meshes[4])
+            meshes[4].gameObject.GetComponent<MeshRenderer>().material = materials[index];
         BaseColor = materials[index].color;
     }
 
@@ -75,11 +81,16 @@ public class LinkedObject : MonoBehaviour
     {
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
         gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 0.1f, gameObject.transform.localScale.z);
-        meshes[0].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
-        meshes[1].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
-        meshes[2].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
-        meshes[3].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
-        meshes[4].gameObject.GetComponent<MeshRenderer>().material.color -= new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        if (meshes[0])
+            meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        if (meshes[1])
+            meshes[1].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        if (meshes[2])
+            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        if (meshes[3])
+            meshes[3].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
+        if (meshes[4])
+            meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
         gameObject.GetComponent<BoxCollider>().enabled = false;
         _isFlat = true;
     }
@@ -88,11 +99,16 @@ public class LinkedObject : MonoBehaviour
     {
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, 2f, gameObject.transform.position.z);
         gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 1f, gameObject.transform.localScale.z);
-        meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
-        meshes[1].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
-        meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
-        meshes[3].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
-        meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        if (meshes[0])
+            meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        if (meshes[1])
+            meshes[1].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        if (meshes[2])
+            meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        if (meshes[3])
+            meshes[3].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
+        if (meshes[4])
+            meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
         gameObject.GetComponent<BoxCollider>().enabled = true;
         _isFlat = false;
     }

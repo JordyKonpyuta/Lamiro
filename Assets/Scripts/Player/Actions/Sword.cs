@@ -46,7 +46,7 @@ public class Sword : MonoBehaviour
 
     private void Awake()
     {
-        _audioSource = gameObject.GetComponent<AudioSource>();
+        _audioSource = gameObject.GetComponentInParent<AudioSource>();
     }
 
     private void SwordAttack()
@@ -69,13 +69,19 @@ public class Sword : MonoBehaviour
         }
         foreach (var curInteractable in _allInteractables)
         {
-            curInteractable.OnInteract();
-            if (curInteractable.CompareTag("Grass"))
+            print("begun");
+            if (curInteractable == null) print (curInteractable.name + " is missing, like Mario, but worse because there's no Luigi to find him");
+            else
             {
-                _allRemovedInteractables.Add(curInteractable);
-                PlaySound(UnityEngine.Random.Range(2,4));
+                print("not null");
+                curInteractable.OnInteract();
+                print("tried Interact");
+                if (curInteractable.CompareTag("Grass"))
+                {
+                    _allRemovedInteractables.Add(curInteractable);
+                    PlaySound(UnityEngine.Random.Range(2, 4));
+                }
             }
-                
         }
         if (_allRemovedInteractables.Count > 0)
             Invoke(nameof(RemoveFromInteractable), 0.05f);

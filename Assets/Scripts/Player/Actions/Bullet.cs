@@ -31,20 +31,23 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player"))
-        {
-            if (other.gameObject.CompareTag("Enemy"))
-                other.gameObject.GetComponent<Ennemy>().TakeDamage(2);
-            else if (other.gameObject.CompareTag("Interactable"))
-            {
-                other.gameObject.GetComponent<Interactable>().OnInteract();
-                Destroy(this.gameObject);
-            }
-            else if (other.gameObject.CompareTag("Grass"))
-                other.gameObject.GetComponent<Interactable>().OnInteract();
-            else if (other.gameObject.layer == 7)
-                Destroy(gameObject);
-        }
+        if (other)
+            if (other.gameObject)
+                if (!other.gameObject.CompareTag("Player"))
+                {
+                    if (other.gameObject.CompareTag("Enemy"))
+                        other.gameObject.GetComponent<Ennemy>().TakeDamage(2);
+                    else if (other.gameObject.CompareTag("Interactable"))
+                    {
+                        if (other.gameObject.GetComponent<Interactable>())
+                            other.gameObject.GetComponent<Interactable>().OnInteract();
+                        Destroy(gameObject);
+                    }
+                    else if (other.gameObject.CompareTag("Grass"))
+                        other.gameObject.GetComponent<Interactable>().OnInteract();
+                    else if (other.gameObject.layer == 7)
+                        Destroy(gameObject);
+                }
     }
 
     void BulletDeath()
