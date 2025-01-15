@@ -36,6 +36,7 @@ public class EnemyAttack : MonoBehaviour
 
     void BasicAttack()
     {
+        PlaySound(attackSounds[0]);
         _forceForRush = _linkedEnemy.transform.forward * 200;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(_forceForRush, ForceMode.Impulse);
         Invoke(nameof(BasicAttackEnds), 0.5f);
@@ -59,6 +60,7 @@ public class EnemyAttack : MonoBehaviour
 
     void SpiderStrike()
     {
+        PlaySound(attackSounds[UnityEngine.Random.Range(2,4)]);
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 1f);
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 3.0f;
         Invoke(nameof(SpiderStrikeEnds), 1f);
@@ -82,6 +84,7 @@ public class EnemyAttack : MonoBehaviour
 
     void BossRush()
     {
+        PlaySound(attackSounds[1]);
         _forceForRush = _linkedEnemy.transform.forward * 300;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(_forceForRush, ForceMode.Impulse);
         Invoke(nameof(BossRushEnds), 1.25f);
@@ -127,5 +130,11 @@ public class EnemyAttack : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         AllInBox.Clear();
+    }
+
+    private void PlaySound(AudioResource audio)
+    {
+        _audioSource.resource = audio;
+        _audioSource.Play();
     }
 }

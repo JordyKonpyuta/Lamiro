@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -20,7 +21,12 @@ public class MusicManager : MonoBehaviour
             return _instance;
         }
     }
-    
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     private void Start()
     {
         PlaySound();

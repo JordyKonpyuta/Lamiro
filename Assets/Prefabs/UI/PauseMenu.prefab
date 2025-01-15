@@ -680,6 +680,7 @@ GameObject:
   - component: {fileID: 8810472152534081781}
   - component: {fileID: 6680088622419206670}
   - component: {fileID: 1689132063480604805}
+  - component: {fileID: 4559549569612557991}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -882,6 +883,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &4559549569612557991
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319959567159871347}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69c3255e6800d364db795401949b4ed2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8850513554180343611
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,8 @@ public class PlayerHealth : MonoBehaviour
     // Death Event
     public void Death()
     {
-        Destroy(gameObject);
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        HUD.Instance.SetVisualHealth();
+        GameOver.Instance.GetComponent<Canvas>().enabled = true;
     }
 }

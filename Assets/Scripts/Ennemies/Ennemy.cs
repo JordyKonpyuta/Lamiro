@@ -287,6 +287,7 @@ public class Ennemy : MonoBehaviour
 
     private void Death()
     {
+        PlaySound();
         _attack = 0;
         _isDead = true;
         player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);

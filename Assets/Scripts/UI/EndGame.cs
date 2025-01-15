@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -14,11 +15,38 @@ public class EndGame : MonoBehaviour
 
     private int score;
 
-    void Start()
+    private static EndGame _instance;
+
+    public static EndGame Instance
     {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("End Game is NULL !");
+            }
+
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
+    private void Start()
+    {
+        GetComponent<Canvas>().enabled = false;
+    }
+
+    public void OnPopUp()
+    {
+        GetComponent<Canvas>().enabled = true;
         MusicManager.Instance.StopSound();
-        CalculateScore();
         PlaySound(popUpSound);
+        GetComponent<Animator>().SetBool("IsOpen", true);
+        CalculateScore();
     }
 
     public void CalculateScore()

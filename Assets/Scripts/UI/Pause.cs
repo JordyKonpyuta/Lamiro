@@ -36,16 +36,17 @@ public class Pause : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        MusicManager.Instance.StopSound();
-        PlaySound(popUpAudio);
-        Animation();
-        Time.timeScale = 0;
+        GetComponent<Canvas>().enabled = false;
         spaceshipPiecesText.text = "Spaceship Pieces : " + Inventory.Instance.spaceshipPieces;
     }
 
     public void Animation()
     {
+        GetComponent<Canvas>().enabled = true;
         GetComponent<Animator>().SetBool("IsOpen", !GetComponent<Animator>().GetBool("IsOpen"));
+        MusicManager.Instance.StopSound();
+        PlaySound(popUpAudio);
+        Time.timeScale = 0;
     }
 
     public void QuitButton()
@@ -56,9 +57,10 @@ public class Pause : MonoBehaviour
     public void ResumeButton()
     {
         Time.timeScale = 1;
-        Animation();
         PlaySound(popOutAudio);
+        GetComponent<Animator>().SetBool("IsOpen", !GetComponent<Animator>().GetBool("IsOpen"));
         MusicManager.Instance.PlaySound();
+        GetComponent<Canvas>().enabled = false;
     }
 
     public void PlaySound(AudioResource audio)

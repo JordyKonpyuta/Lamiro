@@ -5227,6 +5227,9 @@ MonoBehaviour:
   attackSounds:
   - {fileID: 8300000, guid: 94a075de444a4fa49903b54586b7be46, type: 3}
   - {fileID: 8300000, guid: efc481479f0e2e943bd67162c834c630, type: 3}
+  - {fileID: 8300000, guid: aa47e2820ac549846a38d8fcd791de6c, type: 3}
+  - {fileID: 8300000, guid: f4842cf429389db4e97114631f9a659b, type: 3}
+  - {fileID: 8300000, guid: d2302af8911e1654790cda9ccf6c13ad, type: 3}
 --- !u!195 &1331068631312370123
 NavMeshAgent:
   m_ObjectHideFlags: 0

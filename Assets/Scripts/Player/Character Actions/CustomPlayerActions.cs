@@ -67,6 +67,11 @@ public class CustomPlayerActions : MonoBehaviour
             xChecker = 0;
             yChecker = yToCheck2;
         }
+
+        if (Input.GetButton("Pause"))
+        {
+            Pause.Instance.Animation();
+        }
     }
 
     void RotationHorizontal(float rotationXValue)

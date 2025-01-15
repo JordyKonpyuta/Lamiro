@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3836869789941000223}
   - component: {fileID: 9141838766139053049}
   - component: {fileID: 6199476230152642694}
-  - component: {fileID: 6976967252674014428}
+  - component: {fileID: 2749755357235208594}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &6976967252674014428
+--- !u!95 &2749755357235208594
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
