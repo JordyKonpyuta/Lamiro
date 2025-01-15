@@ -23,6 +23,7 @@ public class Ennemy : MonoBehaviour
     
     public bool isStunned = false;
     private float _stunDuration = 5.0f;
+    public bool isGiant = false;
 
     // AI
     public NavMeshAgent navMesh;
@@ -51,32 +52,51 @@ public class Ennemy : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
 
         _audioSource = gameObject.GetComponent<AudioSource>();
-        
+        int enemyTypeCount = 0;
         switch (ennemyType)
         {
             case Enum_EnnemyTypes.EnnemyTypes.Mushroom :
                 ActivateMesh(0);
                 navMesh.speed = 2.5f;
                 _maxHealth = 5;
+                enemyTypeCount = 0;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit :
                 ActivateMesh(1);
-                navMesh.speed = 6.5f;
+                navMesh.speed = 4.5f;
                 attackRange = 8;
                 _maxHealth = 50;
+                transform.GetComponent<CapsuleCollider>().radius = 1.2f;
+                transform.GetComponent<CapsuleCollider>().height = 5f;
+                transform.GetComponent<CapsuleCollider>().transform.position = new Vector3(0, 1.25f, 0.3f);
+                enemyTypeCount = 1;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Slime :
                 ActivateMesh(2);
                 _maxHealth = 8;
+                transform.GetComponent<CapsuleCollider>().radius = 0.35f;
+                transform.GetComponent<CapsuleCollider>().height = 0.7f;
+                transform.GetComponent<CapsuleCollider>().transform.position = new Vector3(0f, 0.25f, 0f);
+                enemyTypeCount = 2;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Spider :
                 ActivateMesh(3);
                 attackRange = 2.5f;
                 navMesh.speed = 4.5f;
                 _maxHealth = 7;
+                enemyTypeCount = 3;
                 break;
         }
         _health = _maxHealth;
+
+        if (!isGiant) return;
+        
+        _maxHealth = _maxHealth * 3 + 1;
+        _health = _maxHealth - 1;
+        transform.GetComponent<CapsuleCollider>().radius = transform.GetComponent<CapsuleCollider>().radius * 3;
+        transform.GetComponent<CapsuleCollider>().height = transform.GetComponent<CapsuleCollider>().height * 3;
+        navMesh.speed /= 2;
+        transform.GetChild(enemyTypeCount).transform.localScale *= 3;
     }
 
     private void Start()
@@ -141,11 +161,11 @@ public class Ennemy : MonoBehaviour
     private void ChasePlayer()
     {
         // Mushrooms only chase if they are attacked
-        if (ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom || _health < _maxHealth)
+        if ((ennemyType != Enum_EnnemyTypes.EnnemyTypes.Mushroom || _health < _maxHealth || isGiant) && !isAttacking)
         {
             navMesh.SetDestination(player.transform.position);
         }
-        else if (ennemyType == Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth)
+        else if (ennemyType == Enum_EnnemyTypes.EnnemyTypes.Mushroom && _health == _maxHealth && !isAttacking)
             Patrol();
         
     }

@@ -12,12 +12,17 @@ public class Jump : MonoBehaviour
     private AudioSource _audioSource;
     public AudioResource jumpSound;
 
+    private string[] _allLayerNames;
+
     private Rigidbody _playerBodyRef;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _allLayerNames = new[] { "Ground", "Default", "Flower" };
         _groundLayer = LayerMask.NameToLayer("Ground");
-        _playerBodyRef = transform.GetComponent<Rigidbody>();
+        _groundLayer = LayerMask.GetMask("Ground");
+
+    _playerBodyRef = transform.GetComponent<Rigidbody>();
     }
 
     private void Awake()
@@ -30,7 +35,7 @@ public class Jump : MonoBehaviour
     {
         // Detect Ground
         RaycastHit hitCast;
-        _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, _groundLayer);
+        _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, LayerMask.GetMask(_allLayerNames));
         
         // Jump
         if (_bIsGrounded && Input.GetButtonDown("Jump"))

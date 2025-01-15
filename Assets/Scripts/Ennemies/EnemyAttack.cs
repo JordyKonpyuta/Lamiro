@@ -29,6 +29,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (!_linkedEnemy.isAttacking)
         {
+            _linkedEnemy.navMesh.isStopped = true;
             Invoke(nameof(BasicAttack), 0.5f);
             _linkedEnemy.isAttacking = true;
         }
@@ -37,22 +38,24 @@ public class EnemyAttack : MonoBehaviour
     void BasicAttack()
     {
         PlaySound(attackSounds[0]);
-        _forceForRush = _linkedEnemy.transform.forward * 200;
+        _forceForRush = _linkedEnemy.transform.forward * 75;
+        _forceForRush.y += 20f;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(_forceForRush, ForceMode.Impulse);
-        Invoke(nameof(BasicAttackEnds), 0.5f);
+        Invoke(nameof(BasicAttackEnds), 0.75f);
     }
 
     void BasicAttackEnds()
     {
-        _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
         _forceForRush = Vector3.zero;
+        Invoke(nameof(StopAttacking), 0.5f);
     }
 
     public void SpiderStrikeBegins()
     {
         if (!_linkedEnemy.isAttacking)
         {
+            _linkedEnemy.navMesh.isStopped = true;
             Invoke(nameof(SpiderStrike), 0.5f);
             _linkedEnemy.isAttacking = true;
         }
@@ -68,16 +71,17 @@ public class EnemyAttack : MonoBehaviour
 
     void SpiderStrikeEnds()
     {
-        _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 0f);
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 1.0f;
+        Invoke(nameof(StopAttacking), 0.35f);
     }
 
     public void BossRushBegin()
     {
         if (!_linkedEnemy.isAttacking)
         {
-            Invoke(nameof(BossRush), 0.5f);
+            _linkedEnemy.navMesh.isStopped = true;
+            Invoke(nameof(BossRush), 0.85f);
             _linkedEnemy.isAttacking = true;
         }
     }
@@ -92,10 +96,16 @@ public class EnemyAttack : MonoBehaviour
 
     void BossRushEnds()
     {
-        _linkedEnemy.isAttacking = false;
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
         _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 0f, 3f);
         _forceForRush = Vector3.zero;
+        Invoke(nameof(StopAttacking), 0.75f);
+    }
+
+    void StopAttacking()
+    {
+        _linkedEnemy.isAttacking = false;
+        _linkedEnemy.navMesh.isStopped = false;
     }
     
     // Got Stunned?
