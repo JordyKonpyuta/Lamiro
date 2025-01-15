@@ -65,7 +65,8 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int d)
     {
         _currentHealth -= d;
-        gameObject.GetComponent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
+        gameObject.GetComponentInParent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
+        gameObject.GetComponentInParent<AudioSource>().Play();
         print(_currentHealth);
         if (_currentHealth <= 0)
         {
@@ -76,8 +77,9 @@ public class PlayerHealth : MonoBehaviour
     // Death Event
     public void Death()
     {
+        Time.timeScale = 0;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         HUD.Instance.SetVisualHealth();
-        GameOver.Instance.GetComponent<Canvas>().enabled = true;
+        GameOver.Instance.Animation();
     }
 }

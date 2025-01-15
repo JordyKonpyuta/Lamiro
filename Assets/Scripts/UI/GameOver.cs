@@ -32,13 +32,11 @@ public class GameOver : MonoBehaviour
     private void Start()
     {
         GetComponent<Canvas>().enabled = false;
-        MusicManager.Instance.StopSound();
-        Animation();
-        PlaySound(popUpSound);
     }
 
     public void RestartButton()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -49,7 +47,10 @@ public class GameOver : MonoBehaviour
 
     public void Animation()
     {
+        GetComponent<Canvas>().enabled = true;
         GetComponent<Animator>().SetBool("IsOpen", !GetComponent<Animator>().GetBool("IsOpen"));
+        MusicManager.Instance.StopSound();
+        PlaySound(popUpSound);
     }
 
     public void PlaySound(AudioResource audio)

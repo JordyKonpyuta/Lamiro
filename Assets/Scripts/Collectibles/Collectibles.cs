@@ -9,6 +9,8 @@ public class Collectibles : MonoBehaviour
     public Enum_Collectibles.CollectibleType type;
 
     public Transform[] meshes;
+
+    private AudioSource _audioSource;
     public AudioResource[] audios;
 
     public int screwsGains = 1;
@@ -34,6 +36,8 @@ public class Collectibles : MonoBehaviour
     void Awake()
     {
         _instance = this;
+
+        _audioSource = GetComponent<AudioSource>();
 
         switch (type)
         {
@@ -120,7 +124,7 @@ public class Collectibles : MonoBehaviour
                 case Enum_Collectibles.CollectibleType.Screws :
                     other.gameObject.GetComponent<Inventory>().AddScrews(screwsGains);
                     HUD.Instance.UpdateScrewsText(Inventory.Instance.GetScrews());
-                    gameObject.GetComponent<AudioSource>().Play();
+                    PlaySound(screwsGains < 2 ? 0 : 1);
                     DesactivateMesh(0);
                     DesactivateMesh(1);
                     DesactivateMesh(2);
@@ -130,7 +134,7 @@ public class Collectibles : MonoBehaviour
                 case Enum_Collectibles.CollectibleType.Sword :
                     other.gameObject.GetComponentInChildren<Sword>().enabled = true;
                     HUD.Instance.swordIcon.enabled = true;
-                    gameObject.GetComponent<AudioSource>().Play();
+                    PlaySound(2);
                     DesactivateMesh(0);
                     Destroy(gameObject.GetComponent<Collider>());
                     Destroy(gameObject, 1.5f);
@@ -138,7 +142,7 @@ public class Collectibles : MonoBehaviour
                 case Enum_Collectibles.CollectibleType.Gun :
                     other.gameObject.GetComponent<Gun>().enabled = true;
                     HUD.Instance.gunIcon.enabled = true;
-                    gameObject.GetComponent<AudioSource>().Play();
+                    PlaySound(3);
                     DesactivateMesh(1);
                     Destroy(gameObject.GetComponent<Collider>());
                     Destroy(gameObject, 1.5f);
@@ -146,14 +150,14 @@ public class Collectibles : MonoBehaviour
                 case Enum_Collectibles.CollectibleType.Jetpack :
                     other.gameObject.GetComponentInChildren<Jump>().enabled = true;
                     HUD.Instance.jetpackIcon.enabled = true;
-                    gameObject.GetComponent<AudioSource>().Play();
+                    PlaySound(4);
                     DesactivateMesh(2);
                     Destroy(gameObject.GetComponent<Collider>());
                     Destroy(gameObject, 1.5f);
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
                     other.gameObject.GetComponent<Inventory>().spaceshipPieces++;
-                    gameObject.GetComponent<AudioSource>().Play();
+                    PlaySound(5);
                     DesactivateMesh(0);
                     Destroy(gameObject.GetComponent<Collider>());
                     Destroy(gameObject, 1.5f);
@@ -170,5 +174,11 @@ public class Collectibles : MonoBehaviour
     private void DesactivateMesh(int index)
     {
         meshes[index].gameObject.SetActive(false);
+    }
+
+    private void PlaySound(int index)
+    {
+        _audioSource.resource = audios[index];
+        _audioSource.Play();
     }
 }

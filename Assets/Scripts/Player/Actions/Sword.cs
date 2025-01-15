@@ -62,10 +62,13 @@ public class Sword : MonoBehaviour
             PlaySound(0);
             return;
         }
+        else
+        {
+            PlaySound(1);
+        }
         foreach (var curEnemy in _allEnemies)
         {
             curEnemy.GetComponent<Ennemy>().TakeDamage(1);
-            PlaySound(1);
         }
         foreach (var curInteractable in _allInteractables)
         {
@@ -81,6 +84,7 @@ public class Sword : MonoBehaviour
                     _allRemovedInteractables.Add(curInteractable);
                     PlaySound(UnityEngine.Random.Range(2, 4));
                 }
+                
             }
         }
         if (_allRemovedInteractables.Count > 0)

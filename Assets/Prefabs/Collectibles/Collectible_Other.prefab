@@ -135,6 +135,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c03dccba6b009d54f91249cdd0c4bed4, type: 3}
   - {fileID: 8300000, guid: 1fefcd64050ad4d49a42095f3cdf467f, type: 3}
   - {fileID: 8300000, guid: ddfb473c0e8a91c479879c1e4f13ded5, type: 3}
+  - {fileID: 8300000, guid: b4156ac6286bbf7478ae9be59517bae0, type: 3}
   - {fileID: 8300000, guid: 7a1521e99d51b55499b7dc86d17e80cf, type: 3}
   screwsGains: 1
 --- !u!82 &8720510795594027981
