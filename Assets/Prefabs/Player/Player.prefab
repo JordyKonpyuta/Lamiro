@@ -225,6 +225,7 @@ MonoBehaviour:
   trueCameraPosition: {x: 0, y: 0, z: 0}
   bIsBigRoom: 0
   bIsCinematic: 0
+  cameraStartPosition: {x: 20, y: 25, z: 4}
 --- !u!1 &725272131433415073
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class CustomCamera : MonoBehaviour
@@ -23,6 +24,8 @@ public class CustomCamera : MonoBehaviour
     [Header("Camera Behaviour")] [Tooltip("Is in a cinematic")] 
     public bool bIsCinematic;
     
+    public Vector3 cameraStartPosition = new Vector3(0,0,0);
+    
     // References
     private CapsuleCollider _playerBodyRef;
     
@@ -38,7 +41,7 @@ public class CustomCamera : MonoBehaviour
         _camera.transform.parent.GetComponent<AllPlayerReferences>().cameraRef = _camera;
         _playerBodyRef = _camera.transform.parent.GetComponent<CapsuleCollider>();
         _camera.transform.parent = null;
-        trueCameraPosition = new Vector3(20.0f, 25.0f, 4.0f);
+        trueCameraPosition = new Vector3(cameraStartPosition.x, cameraStartPosition.y, cameraStartPosition.z);
         _camera.transform.rotation = Quaternion.Euler(75.0f, 0.0f, 0.0f);
     }
 
