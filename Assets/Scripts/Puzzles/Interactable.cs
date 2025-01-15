@@ -37,40 +37,19 @@ public class Interactable : MonoBehaviour
                 _allInteractables = Resources.FindObjectsOfTypeAll<Interactable>();
                 foreach (Interactable interObject in _allInteractables)
                 {
-                    if (interObject.gameObject)
+                    if (interObject.isActiveAndEnabled)
                     {
                         _linkedInteractables.Add(interObject);
                     }
                 }
-
-                foreach (Interactable interObject in _linkedInteractables.ToList())
-                {
-                    if (interObject.gameObject.transform.position.x < 2 &&
-                        interObject.gameObject.transform.position.x > -2 &&
-                        interObject.gameObject.transform.position.z > -2 &&
-                        interObject.gameObject.transform.position.z < 2)
-                    {
-                        _linkedInteractables.Remove(interObject);
-                    }
-                }
                 
                 _allObjects = Resources.FindObjectsOfTypeAll<LinkedObject>();
+                List<Vector3> allPositions = new();
                 foreach (LinkedObject linkObject in _allObjects)
                 {
-                    if (linkObject.gameObject)
+                    if (linkObject.isActiveAndEnabled)
                     {
                         _linkedObjects.Add(linkObject);
-                    }
-                }
-
-                foreach (LinkedObject linkObject in _linkedObjects.ToList())
-                {
-                    if (linkObject.gameObject.transform.position.x < 2 &&
-                        linkObject.gameObject.transform.position.x > -2 &&
-                        linkObject.gameObject.transform.position.z > -2 &&
-                        linkObject.gameObject.transform.position.z < 2)
-                    {
-                        _linkedObjects.Remove(linkObject);
                     }
                 }
                 
@@ -94,29 +73,30 @@ public class Interactable : MonoBehaviour
                 List<LinkedObject> curLinkObj = _linkedObjects;
                 if (_linkedObjects.Count != 0)
                 {
-                    foreach (LinkedObject linkedObject in curLinkObj)
+                    foreach (LinkedObject linkedObject in curLinkObj.ToList())
                     {
-                    print(linkedObject);
                         if (linkedObject)
                             linkedObject.Interaction();
                         else
                             _linkedObjects.Remove(linkedObject);
                     }
                 }
-                print("Switched up Color!!!");
 
                 
                 List<Interactable> curInter = _linkedInteractables;
                 if (_linkedInteractables.Count != 0)
                 {
-                    foreach (Interactable interObject in curInter)
+                    foreach (Interactable interObject in curInter.ToList())
                     {
+                        print(interObject + " = " + interObject.isActiveAndEnabled.ToString());
                         if (interObject)
                             interObject.switchUpColors();
                         else
                             _linkedInteractables.Remove(interObject);
+                        print("DONE ");
                     }
                 }
+                print("Switched up Color!!!");
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;
