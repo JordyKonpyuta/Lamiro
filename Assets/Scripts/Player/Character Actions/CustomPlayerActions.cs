@@ -29,27 +29,33 @@ public class CustomPlayerActions : MonoBehaviour
     void Update()
     {
         // Movement Priorities Calculations
-        if ((Input.GetAxis("Horizontal") > 0.01 || Input.GetAxis("Horizontal") < -0.01) && Math.Abs(Input.GetAxis("Horizontal")) >= Math.Abs(xToCheck) && Input.GetAxis("Horizontal") != 0)
+        if (gameObject.GetComponent<Jump>().bIsGrounded)
         {
-            xToCheck = Input.GetAxis("Horizontal");
-            yToCheck = 0;
-            _directionMove = new Vector3(Input.GetAxis("Horizontal") > 0 ? 1 : -1, 0, 0);
+            if ((Input.GetAxis("Horizontal") > 0.01 || Input.GetAxis("Horizontal") < -0.01) &&
+                Math.Abs(Input.GetAxis("Horizontal")) >= Math.Abs(xToCheck) && Input.GetAxis("Horizontal") != 0)
+            {
+                xToCheck = Input.GetAxis("Horizontal");
+                yToCheck = 0;
+                _directionMove = new Vector3(Input.GetAxis("Horizontal") > 0 ? 1 : -1, 0, 0);
+            }
+            else if ((Input.GetAxis("Vertical") > 0.01 || Input.GetAxis("Vertical") < -0.01) &&
+                     Math.Abs(Input.GetAxis("Vertical")) >= Math.Abs(yToCheck) && Input.GetAxis("Vertical") != 0)
+            {
+                xToCheck = 0;
+                yToCheck = Input.GetAxis("Vertical");
+                _directionMove = new Vector3(0, 0, Input.GetAxis("Vertical") > 0 ? 1 : -1);
+            }
+            else
+            {
+                xToCheck = 0;
+                yToCheck = 0;
+                _directionMove = new Vector3(0, 0, 0);
+            }
+
+            // Move
+            _directionMove *= movementSpeed * Time.deltaTime;
         }
-        else if ((Input.GetAxis("Vertical") > 0.01 || Input.GetAxis("Vertical") < -0.01) && Math.Abs(Input.GetAxis("Vertical")) >= Math.Abs(yToCheck) && Input.GetAxis("Vertical") != 0)
-        {
-            xToCheck = 0;
-            yToCheck = Input.GetAxis("Vertical");
-            _directionMove = new Vector3(0, 0, Input.GetAxis("Vertical") > 0 ? 1 : -1);
-        }
-        else
-        {
-            xToCheck = 0;
-            yToCheck = 0;
-            _directionMove = new Vector3(0, 0, 0);
-        }
-        
-        // Move
-        _directionMove *= movementSpeed * Time.deltaTime;
+
         _body.MovePosition(transform.position + _directionMove);
         
         // Rotation

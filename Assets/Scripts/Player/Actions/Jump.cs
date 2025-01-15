@@ -6,7 +6,7 @@ public class Jump : MonoBehaviour
 {
     public float jumpForce = 10.0f;
     
-    private bool _bIsGrounded = true;
+    public bool bIsGrounded = true;
     private LayerMask _groundLayer;
 
     private AudioSource _audioSource;
@@ -34,11 +34,11 @@ public class Jump : MonoBehaviour
     void Update()
     {
         // Detect Ground
-        RaycastHit hitCast;
-        _bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, LayerMask.GetMask(_allLayerNames));
+        RaycastHit hitCast; 
+        bIsGrounded = Physics.Raycast(transform.position, Vector3.down, out hitCast, 1.5f, LayerMask.GetMask(_allLayerNames));
         
         // Jump
-        if (_bIsGrounded && Input.GetButtonDown("Jump"))
+        if (bIsGrounded && Input.GetButtonDown("Jump"))
         {
             _playerBodyRef.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             PlaySound();
