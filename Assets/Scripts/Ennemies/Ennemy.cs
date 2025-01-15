@@ -19,10 +19,14 @@ public class Ennemy : MonoBehaviour
     private int _maxHealth = 5;
     private int _attack = 1;
     public bool isAttacking = false;
+    public bool isRushAttack = false;
     private bool _isDead = false;
     
     public bool isStunned = false;
     private float _stunDuration = 5.0f;
+    private Vector3 _forceForRush;
+    private float _Rotated;
+    private bool negRot = false; 
     public bool isGiant = false;
 
     // AI
@@ -68,7 +72,6 @@ public class Ennemy : MonoBehaviour
                 _maxHealth = 50;
                 transform.GetComponent<CapsuleCollider>().radius = 1.2f;
                 transform.GetComponent<CapsuleCollider>().height = 5f;
-                transform.GetComponent<CapsuleCollider>().transform.position = new Vector3(0, 1.25f, 0.3f);
                 enemyTypeCount = 1;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Slime :
@@ -76,7 +79,6 @@ public class Ennemy : MonoBehaviour
                 _maxHealth = 8;
                 transform.GetComponent<CapsuleCollider>().radius = 0.35f;
                 transform.GetComponent<CapsuleCollider>().height = 0.7f;
-                transform.GetComponent<CapsuleCollider>().transform.position = new Vector3(0f, 0.25f, 0f);
                 enemyTypeCount = 2;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Spider :
@@ -112,6 +114,13 @@ public class Ennemy : MonoBehaviour
 
     private void Update()
     {
+        if (isStunned)
+        {
+            float curRotAdd = 90 * Time.deltaTime * (negRot ? -1 : 1);
+            _Rotated += curRotAdd;
+            if (_Rotated >= 45 || _Rotated <= -45) negRot = !negRot;
+            transform.Rotate(0f, curRotAdd, 0f);
+        }
         if (_detectedPlayer && !_isDead)
         {
             if ((   _bossRNGAttack > 85f && ennemyType == Enum_EnnemyTypes.EnnemyTypes.Rabbit && !isAttacking) 
@@ -149,7 +158,6 @@ public class Ennemy : MonoBehaviour
         else
         {
             navMesh.SetDestination(walkPoint);
-            print ("Position = " + transform.position + "; Destination = " + walkPoint);
         }
 
         if (Vector3.Distance(transform.position, walkPoint) <= 2)
@@ -250,7 +258,6 @@ public class Ennemy : MonoBehaviour
     public void ChanceForRush()
     {
         _bossRNGAttack = Random.Range(0f, 100f);
-        print(_bossRNGAttack);
     }
 
     public void StopRNGForNow()
@@ -275,18 +282,33 @@ public class Ennemy : MonoBehaviour
     public void GetStunned()
     {
         isStunned = true;
+        _Rotated = 0;
         _possibleAttackPatterns.StunAttackLoss();
         Invoke(nameof(ResetStun), _stunDuration);
+        _forceForRush = transform.forward * 75;
+        _forceForRush.y += 1000f;
+        transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
+        Invoke(nameof(StopGoingBack), 1.0f);
+        navMesh.isStopped = true;
+        print("Get Stunned Bugs Bnnuy");
+    }
+
+    private void StopGoingBack()
+    {
+        transform.GetComponent<Rigidbody>().AddForce(_forceForRush, ForceMode.Impulse);
     }
 
     private void ResetStun()
     {
         isStunned = false;
+        navMesh.isStopped = false;
+        print("stop stun");
     }
 
     // Damage Event
     public void TakeDamage(int damage)
     {
+        print("Inflicted " + damage + " damage ; HPs left : " + _health + " / " + _maxHealth);
         switch (ennemyType)
         {
             default:
@@ -300,6 +322,10 @@ public class Ennemy : MonoBehaviour
                     _health -= damage;
                     if (_health <= 0)
                         Destroy(gameObject);
+                }
+                else
+                {
+                    GetStunned();
                 }
                 break;
         }
@@ -345,5 +371,14 @@ public class Ennemy : MonoBehaviour
     public void SetAttack(int attack)
     {
         _attack = attack;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isRushAttack && other.gameObject.layer == 7)
+        {
+            if (!isStunned)
+                GetStunned();
+        }
     }
 }

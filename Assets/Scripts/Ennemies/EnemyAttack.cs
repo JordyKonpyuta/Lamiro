@@ -81,6 +81,7 @@ public class EnemyAttack : MonoBehaviour
         if (!_linkedEnemy.isAttacking)
         {
             _linkedEnemy.navMesh.isStopped = true;
+            _linkedEnemy.isRushAttack = true;
             Invoke(nameof(BossRush), 0.85f);
             _linkedEnemy.isAttacking = true;
         }
@@ -98,6 +99,7 @@ public class EnemyAttack : MonoBehaviour
     {
         _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
         _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 0f, 3f);
+        _linkedEnemy.isRushAttack = false;
         _forceForRush = Vector3.zero;
         Invoke(nameof(StopAttacking), 0.75f);
     }

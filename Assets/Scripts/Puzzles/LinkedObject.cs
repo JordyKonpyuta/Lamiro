@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,19 +12,18 @@ public class LinkedObject : MonoBehaviour
 
     public Transform[] meshes;
 
-    private Vector3 _targetPositionUp;
-    private Vector3 _targetPositionDown;
-
     private Ennemy _ennemyRef;
     
     public List<Material> materials;
     private Material _refMaterial;
     private Color BaseColor;
+    
+    // Smooth up/down
+    private float _targetPos = 2f;
+    private float _targetScale = 1f; 
 
     private void Awake()
     {
-        _targetPositionUp = transform.position;
-        _targetPositionDown = new Vector3(transform.position.x, transform.position.y - 50, transform.position.z);
         switch (objectColor)
         {
             case Enum_MushroomColors.Colors.Green :
@@ -35,6 +35,25 @@ public class LinkedObject : MonoBehaviour
                 Flatten();
                 break;
         }
+    }
+
+    private void Update()
+    {
+        int yMultPos =  gameObject.transform.position.y - _targetPos > 0 ? -1 : 1;
+
+        if (gameObject.transform.position.y != _targetPos)
+            gameObject.transform.position = new Vector3(
+                gameObject.transform.position.x,
+                gameObject.transform.position.y + (0.02f * yMultPos),
+                gameObject.transform.position.z);
+        
+        
+        yMultPos =  gameObject.transform.localScale.y - _targetScale > 0 ? -1 : 1;
+        if (gameObject.transform.position.y != _targetPos)
+            gameObject.transform.localScale = new Vector3(
+                gameObject.transform.localScale.x,
+                gameObject.transform.localScale.y + (0.01f * yMultPos),
+                gameObject.transform.localScale.z);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,8 +98,8 @@ public class LinkedObject : MonoBehaviour
 
     public void Flatten()
     {
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0.2f, gameObject.transform.position.z);
-        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 0.1f, gameObject.transform.localScale.z);
+        _targetPos = 0.2f;
+        _targetScale = 0.1f;
         if (meshes[0])
             meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
         if (meshes[1])
@@ -97,8 +116,8 @@ public class LinkedObject : MonoBehaviour
 
     public void Fatten()
     {
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, 2f, gameObject.transform.position.z);
-        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, 1f, gameObject.transform.localScale.z);
+        _targetPos = 2f;
+        _targetScale = 1f;
         if (meshes[0])
             meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
         if (meshes[1])
