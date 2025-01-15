@@ -8,6 +8,9 @@ public class Collectibles : MonoBehaviour
 
     public Enum_Collectibles.CollectibleType type;
 
+    public int spaceshipIndex;
+
+    public Transform[] spaceshipMeshes;
     public Transform[] meshes;
 
     private AudioSource _audioSource;
@@ -43,7 +46,6 @@ public class Collectibles : MonoBehaviour
         {
             case Enum_Collectibles.CollectibleType.Sword :
                 ActivateMesh(0);
-                //gameObject.GetComponent<AudioSource>().resource = audios[2];
                 break;
             case Enum_Collectibles.CollectibleType.Screws :
                 if (screwsGains >= 25)
@@ -57,7 +59,6 @@ public class Collectibles : MonoBehaviour
                     ActivateMesh(2);
                     ActivateMesh(1);
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[1];
                 }
                 else if (screwsGains >= 10)
                 {
@@ -67,43 +68,37 @@ public class Collectibles : MonoBehaviour
                     meshes[1].localScale += new Vector3(5f, 5f, 5f);
                     ActivateMesh(1);
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[1];
                 }
                 else if (screwsGains >= 5)
                 {
                     meshes[0].gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.8773585f, 0.8257492f, 0f, 1f);
                     meshes[0].localScale += new Vector3(5f, 5f, 5f);
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[1];
                 }
                 else if (screwsGains == 3)
                 {
                     ActivateMesh(2);
                     ActivateMesh(1);
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[0];
                 }
                 else if (screwsGains == 2)
                 {
                     ActivateMesh(1);
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[0];
                 }
                 else if (screwsGains == 1)
                 {
                     ActivateMesh(0);
-                    //gameObject.GetComponent<AudioSource>().resource = audios[0];
                 }
                 break;
             case Enum_Collectibles.CollectibleType.Gun :
                 ActivateMesh(1);
-                //gameObject.GetComponent<AudioSource>().resource = audios[3];
                 break;
             case Enum_Collectibles.CollectibleType.Jetpack :
                 ActivateMesh(2);
-                //gameObject.GetComponent<AudioSource>().resource = audios[4];
                 break;
             case Enum_Collectibles.CollectibleType.SpaceshipPieces :
+                ActivateMesh(spaceshipIndex);
                 break;
         }
     }
@@ -157,8 +152,9 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
                     other.gameObject.GetComponent<Inventory>().spaceshipPieces++;
+                    Pause.Instance.SetText();
                     PlaySound(5);
-                    DesactivateMesh(0);
+                    DesactivateMesh(spaceshipIndex);
                     Destroy(gameObject.GetComponent<Collider>());
                     Destroy(gameObject, 1.5f);
                     break;
@@ -168,12 +164,18 @@ public class Collectibles : MonoBehaviour
 
     private void ActivateMesh(int index)
     {
-        meshes[index].gameObject.SetActive(true);
+        if (type != Enum_Collectibles.CollectibleType.SpaceshipPieces)
+            meshes[index].gameObject.SetActive(true);
+        else
+            spaceshipMeshes[index].gameObject.SetActive(true);
     }
 
     private void DesactivateMesh(int index)
     {
-        meshes[index].gameObject.SetActive(false);
+        if (type != Enum_Collectibles.CollectibleType.SpaceshipPieces)
+            meshes[index].gameObject.SetActive(false);
+        else
+            spaceshipMeshes[index].gameObject.SetActive(false);
     }
 
     private void PlaySound(int index)

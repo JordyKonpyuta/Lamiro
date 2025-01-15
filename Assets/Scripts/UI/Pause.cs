@@ -37,7 +37,6 @@ public class Pause : MonoBehaviour
     void Start()
     {
         GetComponent<Canvas>().enabled = false;
-        spaceshipPiecesText.text = "Spaceship Pieces : " + Inventory.Instance.spaceshipPieces;
     }
 
     public void Animation()
@@ -67,6 +66,11 @@ public class Pause : MonoBehaviour
     {
         gameObject.GetComponent<AudioSource>().resource = audio;
         gameObject.GetComponent<AudioSource>().Play();
+    }
+
+    public void SetText()
+    {
+        spaceshipPiecesText.text = "Spaceship Pieces : " + Inventory.Instance.spaceshipPieces;
     }
     
     
