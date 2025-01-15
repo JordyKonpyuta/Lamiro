@@ -1,13 +1,23 @@
+using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Heal : MonoBehaviour
 {
     private CapsuleCollider _playerBodyRef;
+
+    public AudioResource healSound;
+    private AudioSource _audioSource;
     
     // -------------------- //
     //       FUNCTIONS      //
     // -------------------- //
-    
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +42,8 @@ public class Heal : MonoBehaviour
             transform.GetComponent<Inventory>().AddScrews(-10);
             HUD.Instance.SetVisualHealth();
             HUD.Instance.UpdateScrewsText(transform.GetComponent<Inventory>().GetScrews());
+            _audioSource.resource = healSound;
+            _audioSource.Play();
         }
     }
 }

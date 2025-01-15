@@ -597,6 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd2dfd452a7bae40a2c1cdad6aa0f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healSound: {fileID: 8300000, guid: 7d7d640154239c44b884f074dfc80ae7, type: 3}
 --- !u!114 &2245442373300218504
 MonoBehaviour:
   m_ObjectHideFlags: 0

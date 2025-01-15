@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -52,7 +53,16 @@ public class EndGame : MonoBehaviour
     public void CalculateScore()
     {
         score += Inventory.Instance.GetScrews();
+        score += (int)((1800 - Inventory.Instance.timer) * 0.5);
         scoreText.text = "Score : " + score;
+        rank.sprite = score switch
+        {
+            <= 300 => rankImages[4],
+            <= 400 => rankImages[3],
+            <= 500 => rankImages[2],
+            <= 700 => rankImages[1],
+            > 700 => rankImages[0]
+        };
     }
 
     public void MenuButton()

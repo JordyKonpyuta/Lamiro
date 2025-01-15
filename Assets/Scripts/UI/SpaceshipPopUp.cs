@@ -27,6 +27,13 @@ public class SpaceshipPopUp : MonoBehaviour
     public void PopUp()
     {
         GetComponent<Canvas>().enabled = true;
-        GetComponent<Animator>().SetBool("IsOpen", true);
+        GetComponent<Animator>().Play("Spaceship");
+        Invoke(nameof(PopOut), 1.5f);
+    }
+
+    public void PopOut()
+    {
+        GetComponent<Canvas>().enabled = false;
+        GetComponent<AudioSource>().Play();
     }
 }

@@ -1,9 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Spaceship : MonoBehaviour
 {
-    
+    public AudioResource healSound;
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = gameObject.GetComponent<AudioSource>();
+        _audioSource.resource = healSound;
+    }
+
     private void Start()
     {
         SpaceshipPopUp.Instance.GetComponent<Canvas>().enabled = false;
@@ -18,7 +27,7 @@ public class Spaceship : MonoBehaviour
                 SpaceshipPopUp.Instance.PopUp();
                 PlayerHealth.Instance.SetHealth(PlayerHealth.Instance.GetMaxHealth());
                 HUD.Instance.SetVisualHealth();
-                Debug.LogError("Coucou");
+                _audioSource.Play();
             }
 
             else
