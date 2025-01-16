@@ -349,7 +349,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9213643916603760564}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 75
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b832ef012b2fd7488a4c0b893e22a54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 7
 --- !u!114 &7782587446366386458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,6 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 500
+  bIsGrounded: 1
   jumpSound: {fileID: 8300000, guid: 2aa22866e15962841adc5cf4757ad413, type: 3}
 --- !u!114 &5146533841623325897
 MonoBehaviour:
