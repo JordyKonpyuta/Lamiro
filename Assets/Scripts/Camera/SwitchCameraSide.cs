@@ -1,12 +1,17 @@
 using System;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwitchCameraSide : MonoBehaviour
 {
     public enum_Sides.Direction direction;
     [Tooltip("Is one of the sides a Beeg Room?")] public bool bigRoom;
     [Tooltip("Set the big room's position")] public enum_Sides.Sides sideEntranceForBigRoom;
+    [Tooltip("Is it a screen transition")] public bool mapTransition;
+    [Tooltip("Which Scene to go In")] public SceneAsset newMap;
+
     
     private BoxCollider _col;
     private float _refValue;
@@ -62,6 +67,8 @@ public class SwitchCameraSide : MonoBehaviour
                 case enum_Sides.Direction.Vertical:
                     if (Math.Abs(_refValue - other.GameObject().transform.position.z) > 1.5f)
                     {
+                        if (mapTransition)
+                            SceneManager.LoadScene(newMap.name, LoadSceneMode.Single);
                         if (other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().trueCameraPosition.z <
                             this.GameObject().transform.position.z)
@@ -80,6 +87,8 @@ public class SwitchCameraSide : MonoBehaviour
                 case enum_Sides.Direction.Horizontal:
                     if (Math.Abs(_refValue - other.GameObject().transform.position.x) > 1.5f)
                     {
+                        if (mapTransition)
+                            SceneManager.LoadScene(newMap.name, LoadSceneMode.Single);
                         if (other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().trueCameraPosition.x <
                             this.GameObject().transform.position.x)

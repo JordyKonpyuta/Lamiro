@@ -43,6 +43,7 @@ public class HUD : MonoBehaviour
         gunIcon.enabled = false;
         
         SetVisualHealth();
+        UpdateScrewsText(Inventory.Instance.GetScrews());
     }
 
     

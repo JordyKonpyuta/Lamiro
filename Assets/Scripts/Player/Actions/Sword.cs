@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -71,13 +72,15 @@ public class Sword : MonoBehaviour
         {
             PlaySound(1);
         }
-        foreach (var curEnemy in _allEnemies)
+        foreach (var curEnemy in _allEnemies.ToList())
         {
-            curEnemy.GetComponent<Ennemy>().TakeDamage(1);
+            if (!curEnemy.isActiveAndEnabled) _allEnemies.Remove(curEnemy);
+            else
+                curEnemy.GetComponent<Ennemy>().TakeDamage(1);
         }
-        foreach (var curInteractable in _allInteractables)
+        foreach (var curInteractable in _allInteractables.ToList())
         {
-            if (curInteractable == null) print (curInteractable.name + " is missing, like Mario, but worse because there's no Luigi to find him");
+            if (!curInteractable.isActiveAndEnabled) _allInteractables.Remove(curInteractable);
             else
             {
                 curInteractable.OnInteract();

@@ -40,9 +40,14 @@ public class CustomCamera : MonoBehaviour
         _camera = this.GameObject().GetComponent<Camera>();
         _camera.transform.parent.GetComponent<AllPlayerReferences>().cameraRef = _camera;
         _playerBodyRef = _camera.transform.parent.GetComponent<CapsuleCollider>();
-        _camera.transform.parent = null;
+        Invoke(nameof(RemoveCamera), 0.4f);
         trueCameraPosition = new Vector3(cameraStartPosition.x, cameraStartPosition.y, cameraStartPosition.z);
         _camera.transform.rotation = Quaternion.Euler(75.0f, 0.0f, 0.0f);
+    }
+
+    private void RemoveCamera()
+    {
+        _camera.transform.parent = null;
     }
 
     // Update is called once per frame
