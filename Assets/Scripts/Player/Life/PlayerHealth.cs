@@ -67,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
         _currentHealth -= d;
         gameObject.GetComponentInParent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
         gameObject.GetComponentInParent<AudioSource>().Play();
-        HUD.Instance.SetVisualHealth();
+        print(_currentHealth);
         if (_currentHealth <= 0)
         {
             Death();
