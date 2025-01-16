@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
@@ -382,19 +381,12 @@ public class Ennemy : MonoBehaviour
         {
             default:
                 player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
-                print("try1");
                 navMesh.Warp(new Vector3(0, -50, 0));
-                print("try2");
                 _rigidbody.useGravity = false;
-                print("try3");
                 navMesh.SetDestination(new Vector3(0, -50, 0));
-                print("try4");
                 navMesh.isStopped = true;
-                print("try5");
                 Vector3 screwThrowVector = Random.onUnitSphere * 20;
-                print("try6");
                 screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
-                print("try7");
                 
                 int randNum = UnityEngine.Random.Range(0, 100);
                 if (randNum > 90)
@@ -411,7 +403,7 @@ public class Ennemy : MonoBehaviour
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
                 float timeWaitScrew = 0.0f;
-                for (int i = 0, num = UnityEngine.Random.Range(20, 25); i < num; i++)
+                for (int i = 0, num = Random.Range(20, 25); i < num; i++)
                 {
                     Invoke(nameof(SummonScrew), timeWaitScrew);
                     timeWaitScrew += 0.1f;
