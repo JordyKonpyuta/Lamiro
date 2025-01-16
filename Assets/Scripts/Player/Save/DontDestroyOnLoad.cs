@@ -28,7 +28,7 @@ public class DontDestroyOnLoad : MonoBehaviour
 
         if (objectIndex == 2)
         {
-            _persistantObjects[objectIndex].transform.position = gameObject.GetComponent<CustomCamera>().cameraStartPosition;
+            _persistantObjects[objectIndex].GetComponent<CustomCamera>().trueCameraPosition = gameObject.GetComponent<CustomCamera>().cameraStartPosition;
             print(_persistantObjects[objectIndex].GetComponent<AllPlayerReferences>().cameraRef.transform.position);
             print(gameObject.GetComponent<AllPlayerReferences>().cameraRef.GetComponent<CustomCamera>().cameraStartPosition);
         }

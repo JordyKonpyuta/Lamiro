@@ -14,26 +14,10 @@ public class PlayerHealth : MonoBehaviour
     // -------------------- //
     //       FUNCTIONS      //
     // -------------------- //
-    
-    // Singleton to be accessible everywhere
-    private static PlayerHealth _instance;
-
-    public static PlayerHealth Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("Player is null!");
-            }
-
-            return _instance;
-        }
-    }
 
     void Awake()
     {
-        _instance = this;
+        
     }
 
     void Start()

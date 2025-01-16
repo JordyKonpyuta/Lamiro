@@ -25,7 +25,7 @@ public class Spaceship : MonoBehaviour
             if (Inventory.Instance.spaceshipPieces < 5)
             {
                 SpaceshipPopUp.Instance.PopUp();
-                PlayerHealth.Instance.SetHealth(PlayerHealth.Instance.GetMaxHealth());
+                other.GetComponent<PlayerHealth>().SetHealth(other.GetComponent<PlayerHealth>().GetMaxHealth());
                 HUD.Instance.SetVisualHealth();
                 _audioSource.Play();
             }
