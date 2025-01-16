@@ -67,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Time.timeScale = 0;
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
-        HUD.Instance.SetVisualHealth();
+        gameObject.GetComponent<AllPlayerReferences>().HUDref.SetVisualHealth();
         GameOver.Instance.Animation();
     }
 

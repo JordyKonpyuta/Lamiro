@@ -26,7 +26,7 @@ public class Spaceship : MonoBehaviour
             {
                 SpaceshipPopUp.Instance.PopUp();
                 other.GetComponent<PlayerHealth>().SetHealth(other.GetComponent<PlayerHealth>().GetMaxHealth());
-                HUD.Instance.SetVisualHealth();
+                other.GetComponent<AllPlayerReferences>().HUDref.GetComponent<HUD>().SetVisualHealth();
                 _audioSource.Play();
             }
 

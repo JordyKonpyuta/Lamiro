@@ -120,7 +120,7 @@ public class Collectibles : MonoBehaviour
             {
                 case Enum_Collectibles.CollectibleType.Screws :
                     other.gameObject.GetComponent<Inventory>().AddScrews(screwsGains);
-                    HUD.Instance.UpdateScrewsText(Inventory.Instance.GetScrews());
+                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.UpdateScrewsText(Inventory.Instance.GetScrews());
                     PlaySound(screwsGains < 2 ? 0 : 1);
                     DesactivateMesh(0);
                     DesactivateMesh(1);
@@ -133,7 +133,7 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
                     other.gameObject.GetComponentInChildren<Sword>().enabled = true;
-                    HUD.Instance.swordIcon.enabled = true;
+                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.swordIcon.enabled = true;
                     PlaySound(2);
                     DesactivateMesh(0);
                     foreach(Collider thisCol in gameObject.GetComponents<Collider>())
@@ -143,7 +143,7 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
                     other.gameObject.GetComponent<Gun>().enabled = true;
-                    HUD.Instance.gunIcon.enabled = true;
+                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.gunIcon.enabled = true;
                     PlaySound(3);
                     DesactivateMesh(1);
                     foreach(Collider thisCol in gameObject.GetComponents<Collider>())
@@ -154,7 +154,7 @@ public class Collectibles : MonoBehaviour
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
                     other.gameObject.GetComponentInChildren<Jump>().enabled = true;
-                    HUD.Instance.jetpackIcon.enabled = true;
+                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.jetpackIcon.enabled = true;
                     PlaySound(4);
                     DesactivateMesh(2);
                     foreach(Collider thisCol in gameObject.GetComponents<Collider>())

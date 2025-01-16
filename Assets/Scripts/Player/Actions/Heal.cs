@@ -40,8 +40,8 @@ public class Heal : MonoBehaviour
         {
             transform.GetComponent<PlayerHealth>().SetHealth(transform.GetComponent<PlayerHealth>().GetHealth() + 1);
             transform.GetComponent<Inventory>().AddScrews(-10);
-            HUD.Instance.SetVisualHealth();
-            HUD.Instance.UpdateScrewsText(transform.GetComponent<Inventory>().GetScrews());
+            gameObject.GetComponent<AllPlayerReferences>().HUDref.SetVisualHealth();
+            gameObject.GetComponent<AllPlayerReferences>().HUDref.UpdateScrewsText(transform.GetComponent<Inventory>().GetScrews());
             _audioSource.resource = healSound;
             _audioSource.Play();
         }

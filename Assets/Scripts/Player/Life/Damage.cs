@@ -39,10 +39,10 @@ public class Damage : MonoBehaviour
     {
         if ((other.CompareTag("Enemy") || other.CompareTag("EnemyBullet")) && !_isInvulnerable)
         {
-            _playerHealthRef.TakeDamage(other.GetComponent<Ennemy>().GetAttack());
-            HUD.Instance.SetVisualHealth();
             _isInvulnerable = true;
             Invoke(nameof(ResetInvulnerability), 1.5f);
+            _playerHealthRef.TakeDamage(other.GetComponent<Ennemy>().GetAttack());
+            _playerHealthRef.gameObject.GetComponent<AllPlayerReferences>().HUDref.SetVisualHealth();
         }
     }
 }

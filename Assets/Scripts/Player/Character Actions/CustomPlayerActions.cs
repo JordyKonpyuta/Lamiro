@@ -15,6 +15,8 @@ public class CustomPlayerActions : MonoBehaviour
     private float yToCheck = 0;
     private float yChecker = 0;
 
+    private bool DONTMOVE = true;
+
     // -------------------- //
     //       FUNCTIONS      //
     // -------------------- //
@@ -23,11 +25,18 @@ public class CustomPlayerActions : MonoBehaviour
     void Start()
     {
         _body = GetComponent<Rigidbody>();
+        Invoke(nameof(StartMoving), 1f);
     }
 
+    private void StartMoving()
+    {
+        DONTMOVE = false;
+    }
+    
     // Update is called once per frame
     void Update()
     {
+        if (DONTMOVE) return;
         // Movement Priorities Calculations
         if (gameObject.GetComponent<Jump>().bIsGrounded)
         {

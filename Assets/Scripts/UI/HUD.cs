@@ -17,25 +17,9 @@ public class HUD : MonoBehaviour
     // Images for Health
     public Image[] healthImages;
     
-    // Singleton to be accessible anywhere
-    private static HUD _instance;
-
-    public static HUD Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("Player is null!");
-            }
-
-            return _instance;
-        }
-    }
-    
     void Awake()
     {
-        _instance = this;
+        
     }
 
     void Start()

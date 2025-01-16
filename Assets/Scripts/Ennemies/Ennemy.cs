@@ -357,13 +357,20 @@ public class Ennemy : MonoBehaviour
                     PlaySound(mushroomSound);
                 }
                 _health -= damage;
-                vfx.SetActive(true);
-                vfx.GetComponent<ParticleSystem>().Play();
                 if (_health <= 0)
                     Death();
+                vfx.SetActive(true);
+                vfx.GetComponent<ParticleSystem>().Play();
                 break;
                 
         }
+        Invoke(nameof(ResetVFX), 0.15f);
+    }
+
+    void ResetVFX()
+    {
+        vfx.GetComponent<ParticleSystem>().Stop();
+        vfx.SetActive(false);
     }
 
     private void Death()
@@ -375,12 +382,19 @@ public class Ennemy : MonoBehaviour
         {
             default:
                 player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
+                print("try1");
                 navMesh.Warp(new Vector3(0, -50, 0));
+                print("try2");
                 _rigidbody.useGravity = false;
+                print("try3");
                 navMesh.SetDestination(new Vector3(0, -50, 0));
+                print("try4");
                 navMesh.isStopped = true;
+                print("try5");
                 Vector3 screwThrowVector = Random.onUnitSphere * 20;
+                print("try6");
                 screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
+                print("try7");
                 
                 int randNum = UnityEngine.Random.Range(0, 100);
                 if (randNum > 90)

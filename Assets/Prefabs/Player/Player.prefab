@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 2347534279843852095}
   - component: {fileID: 2245442373300218504}
   - component: {fileID: 5146533841623325897}
+  - component: {fileID: 7382848919691227237}
   - component: {fileID: 8958778446130404118}
   - component: {fileID: 6184768492015430159}
   m_Layer: 0
@@ -535,6 +536,7 @@ MonoBehaviour:
   cameraRef: {fileID: 0}
   allEnemies: []
   Entrypoint: {x: 0, y: 0, z: 0}
+  HUDref: {fileID: 0}
 --- !u!114 &4191509816928185133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,6 +599,19 @@ MonoBehaviour:
   screws: 0
   spaceshipPieces: 0
   timer: 0
+--- !u!114 &7382848919691227237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213643916603760564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad4d99d6e637e84d97777dc415a6c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HUDref: {fileID: 2268760778114964300, guid: 40dca1bc6207e1b4fb5ee4391a79ae9b, type: 3}
 --- !u!114 &8958778446130404118
 MonoBehaviour:
   m_ObjectHideFlags: 0
