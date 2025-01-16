@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LinkedObject : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class LinkedObject : MonoBehaviour
     public Enum_MushroomColors.Colors objectColor;
 
     private bool _isFlat = false;
+    private bool _isFattening = false;
 
     public Transform[] meshes;
 
@@ -21,9 +23,12 @@ public class LinkedObject : MonoBehaviour
     // Smooth up/down
     private float _targetPos;
     private float _targetScale; 
+    
+    private NavMeshObstacle _navMeshObstacle;
 
     private void Awake()
     {
+        _navMeshObstacle = GetComponent<NavMeshObstacle>();
         switch (objectColor)
         {
             case Enum_MushroomColors.Colors.Green :
@@ -48,6 +53,7 @@ public class LinkedObject : MonoBehaviour
                     gameObject.transform.localScale.x,
                     0.1f,
                     gameObject.transform.localScale.z);
+                _navMeshObstacle.enabled = false;
                 Flatten();
                 break;
         }
@@ -132,6 +138,7 @@ public class LinkedObject : MonoBehaviour
             meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor - new Color(0.5f, 0.5f, 0.5f, 0.00f);
         gameObject.GetComponent<BoxCollider>().enabled = false;
         _isFlat = true;
+        _navMeshObstacle.enabled = false;
     }
 
     public void Fatten()
@@ -150,5 +157,20 @@ public class LinkedObject : MonoBehaviour
             meshes[4].gameObject.GetComponent<MeshRenderer>().material.color = BaseColor;
         gameObject.GetComponent<BoxCollider>().enabled = true;
         _isFlat = false;
+        _isFattening = true;
+        Invoke(nameof(StoppedFattening), 1.25f);
+        _navMeshObstacle.enabled = true;
+    }
+
+    private void StoppedFattening()
+    {
+        _isFattening = false;
+    }
+    
+    // GETTERS
+
+    public bool getIsFattening()
+    {
+        return _isFattening;
     }
 }

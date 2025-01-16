@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Audio;
@@ -24,7 +25,7 @@ public class Ennemy : MonoBehaviour
     private bool _isDead = false;
     
     public bool isStunned = false;
-    private float _stunDuration = 5.0f;
+    private float _stunDuration = 8.0f;
     private Vector3 _forceForRush;
     private float _Rotated;
     private bool negRot = false; 
@@ -63,21 +64,21 @@ public class Ennemy : MonoBehaviour
             case Enum_EnnemyTypes.EnnemyTypes.Mushroom :
                 ActivateMesh(0);
                 navMesh.speed = 2.5f;
-                _maxHealth = 5;
+                _maxHealth = 3;
                 enemyTypeCount = 0;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit :
                 ActivateMesh(1);
                 navMesh.speed = 4.5f;
                 attackRange = 8;
-                _maxHealth = 50;
+                _maxHealth = 30;
                 transform.GetComponent<CapsuleCollider>().radius = 1.2f;
                 transform.GetComponent<CapsuleCollider>().height = 5f;
                 enemyTypeCount = 1;
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Slime :
                 ActivateMesh(2);
-                _maxHealth = 8;
+                _maxHealth = 5;
                 transform.GetComponent<CapsuleCollider>().radius = 0.35f;
                 transform.GetComponent<CapsuleCollider>().height = 0.7f;
                 enemyTypeCount = 2;
@@ -86,7 +87,7 @@ public class Ennemy : MonoBehaviour
                 ActivateMesh(3);
                 attackRange = 2.5f;
                 navMesh.speed = 4.5f;
-                _maxHealth = 7;
+                _maxHealth = 2;
                 enemyTypeCount = 3;
                 break;
         }
@@ -121,6 +122,7 @@ public class Ennemy : MonoBehaviour
             _Rotated += curRotAdd;
             if (_Rotated >= 45 || _Rotated <= -45) negRot = !negRot;
             transform.Rotate(0f, curRotAdd, 0f);
+            return;
         }
         if (_detectedPlayer && !_isDead)
         {
@@ -282,28 +284,34 @@ public class Ennemy : MonoBehaviour
 
     public void GetStunned()
     {
+        CancelInvoke(nameof(ResetStun));
         isStunned = true;
         _Rotated = 0;
         _possibleAttackPatterns.StunAttackLoss();
         Invoke(nameof(ResetStun), _stunDuration);
-        _forceForRush = transform.forward * 75;
-        _forceForRush.y += 1000f;
-        transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        Invoke(nameof(GoBackwards), 0.2f);
         Invoke(nameof(StopGoingBack), 1.0f);
         navMesh.isStopped = true;
         print("Get Stunned Bugs Bnnuy");
     }
 
+    private void GoBackwards()
+    {
+        transform.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * -35, ForceMode.Impulse);
+    }
+
     private void StopGoingBack()
     {
-        transform.GetComponent<Rigidbody>().AddForce(_forceForRush, ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
 
     private void ResetStun()
     {
         isStunned = false;
         navMesh.isStopped = false;
-        print("stop stun");
+        isRushAttack = false;
+        transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
     }
 
     // Damage Event
@@ -323,10 +331,6 @@ public class Ennemy : MonoBehaviour
                     _health -= damage;
                     if (_health <= 0)
                         Destroy(gameObject);
-                }
-                else
-                {
-                    GetStunned();
                 }
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Mushroom:
@@ -386,7 +390,7 @@ public class Ennemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isRushAttack && other.gameObject.layer == 7)
+        if (other.gameObject.layer == 7 && (isRushAttack || other.GetComponent<LinkedObject>().getIsFattening()))
         {
             if (!isStunned)
                 GetStunned();

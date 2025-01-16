@@ -72,13 +72,10 @@ public class Sword : MonoBehaviour
         }
         foreach (var curInteractable in _allInteractables)
         {
-            print("begun");
             if (curInteractable == null) print (curInteractable.name + " is missing, like Mario, but worse because there's no Luigi to find him");
             else
             {
-                print("not null");
                 curInteractable.OnInteract();
-                print("tried Interact");
                 if (curInteractable.CompareTag("Grass"))
                 {
                     _allRemovedInteractables.Add(curInteractable);

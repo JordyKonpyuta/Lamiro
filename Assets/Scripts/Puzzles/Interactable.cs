@@ -88,15 +88,12 @@ public class Interactable : MonoBehaviour
                 {
                     foreach (Interactable interObject in curInter.ToList())
                     {
-                        print(interObject + " = " + interObject.isActiveAndEnabled.ToString());
                         if (interObject)
                             interObject.switchUpColors();
                         else
                             _linkedInteractables.Remove(interObject);
-                        print("DONE ");
                     }
                 }
-                print("Switched up Color!!!");
                 break;
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;

@@ -84,6 +84,7 @@ public class EnemyAttack : MonoBehaviour
             _linkedEnemy.isRushAttack = true;
             Invoke(nameof(BossRush), 0.85f);
             _linkedEnemy.isAttacking = true;
+            print("Ta mère la reine des putes");
         }
     }
 
