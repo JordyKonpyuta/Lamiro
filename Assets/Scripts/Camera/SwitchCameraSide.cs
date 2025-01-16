@@ -1,8 +1,6 @@
 using System;
 using Unity.VisualScripting;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +10,9 @@ public class SwitchCameraSide : MonoBehaviour
     [Tooltip("Is one of the sides a Beeg Room?")] public bool bigRoom;
     [Tooltip("Set the big room's position")] public enum_Sides.Sides sideEntranceForBigRoom;
     [Tooltip("Is it a screen transition")] public bool mapTransition;
+#if UNITY_EDITOR
     [Tooltip("Which Scene to go In")] public SceneAsset newMap;
+    #endif
 
     
     private BoxCollider _col;

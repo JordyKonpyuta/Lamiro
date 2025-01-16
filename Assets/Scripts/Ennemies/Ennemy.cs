@@ -347,7 +347,7 @@ public class Ennemy : MonoBehaviour
                     vfx.SetActive(true);
                     vfx.GetComponent<ParticleSystem>().Play();
                     if (_health <= 0)
-                        Destroy(gameObject);
+                        Death();
                 }
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Mushroom:
@@ -377,6 +377,7 @@ public class Ennemy : MonoBehaviour
         PlaySound(deathSound);
         _attack = 0;
         _isDead = true;
+        print("0");
         switch (ennemyType)
         {
             default:
@@ -402,14 +403,17 @@ public class Ennemy : MonoBehaviour
                 }
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
+                print("0");
                 float timeWaitScrew = 0.0f;
+                print("0");
                 for (int i = 0, num = Random.Range(20, 25); i < num; i++)
                 {
                     Invoke(nameof(SummonScrew), timeWaitScrew);
                     timeWaitScrew += 0.1f;
                     navMesh.isStopped = true;
                 }
-                GameObject thisJetpackDrop = Instantiate(jetpackDrop, transform.position + Vector3.up, transform.rotation);
+                print("0");
+                GameObject thisJetpackDrop = Instantiate(jetpackDrop, gameObject.transform.position + Vector3.up, transform.rotation);
                 thisJetpackDrop.GetComponent<Collectibles>().type = Enum_Collectibles.CollectibleType.Jetpack;
                 Destroy(gameObject, 3f);
                 _isDead = true;
