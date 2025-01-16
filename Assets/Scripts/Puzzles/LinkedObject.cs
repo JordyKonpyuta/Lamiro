@@ -19,8 +19,8 @@ public class LinkedObject : MonoBehaviour
     private Color BaseColor;
     
     // Smooth up/down
-    private float _targetPos = 2f;
-    private float _targetScale = 1f; 
+    private float _targetPos;
+    private float _targetScale; 
 
     private void Awake()
     {
@@ -28,10 +28,26 @@ public class LinkedObject : MonoBehaviour
         {
             case Enum_MushroomColors.Colors.Green :
                 SwitchColors(0);
+                gameObject.transform.position = new Vector3(
+                    gameObject.transform.position.x,
+                    2f,
+                    gameObject.transform.position.z);
+                gameObject.transform.localScale = new Vector3(
+                    gameObject.transform.localScale.x,
+                    1f,
+                    gameObject.transform.localScale.z);
                 Fatten();
                 break;
             case Enum_MushroomColors.Colors.Red :
                 SwitchColors(1);
+                gameObject.transform.position = new Vector3(
+                    gameObject.transform.position.x,
+                    0.2f,
+                    gameObject.transform.position.z);
+                gameObject.transform.localScale = new Vector3(
+                    gameObject.transform.localScale.x,
+                    0.1f,
+                    gameObject.transform.localScale.z);
                 Flatten();
                 break;
         }
@@ -41,7 +57,7 @@ public class LinkedObject : MonoBehaviour
     {
         int yMultPos =  gameObject.transform.position.y - _targetPos > 0 ? -1 : 1;
 
-        if (gameObject.transform.position.y != _targetPos)
+        if ((!_isFlat && gameObject.transform.position.y < 2f) || (_isFlat && gameObject.transform.position.y > 0.2f))
             gameObject.transform.position = new Vector3(
                 gameObject.transform.position.x,
                 gameObject.transform.position.y + (0.02f * yMultPos),
@@ -49,7 +65,7 @@ public class LinkedObject : MonoBehaviour
         
         
         yMultPos =  gameObject.transform.localScale.y - _targetScale > 0 ? -1 : 1;
-        if (gameObject.transform.position.y != _targetPos)
+        if ((!_isFlat && gameObject.transform.position.y < 1f) || (_isFlat && gameObject.transform.position.y > 0.1f))
             gameObject.transform.localScale = new Vector3(
                 gameObject.transform.localScale.x,
                 gameObject.transform.localScale.y + (0.01f * yMultPos),
@@ -72,11 +88,15 @@ public class LinkedObject : MonoBehaviour
     {
         if (_isFlat)
         {
+            _targetPos = 2f;
+            _targetScale = 1f;
             Fatten();
         }
         
         else
         {
+            _targetPos = 0.2f;
+            _targetScale = 0.1f;
             Flatten();
         }
     }
