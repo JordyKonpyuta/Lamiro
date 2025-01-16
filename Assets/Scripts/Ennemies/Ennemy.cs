@@ -290,7 +290,8 @@ public class Ennemy : MonoBehaviour
         _possibleAttackPatterns.StunAttackLoss();
         Invoke(nameof(ResetStun), _stunDuration);
         transform.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        Invoke(nameof(GoBackwards), 0.2f);
+        //Invoke(nameof(GoBackwards), 0.2f);
+        transform.GetComponent<Rigidbody>().AddForce(transform.forward.normalized * -35, ForceMode.Impulse);
         Invoke(nameof(StopGoingBack), 1.0f);
         navMesh.isStopped = true;
         print("Get Stunned Bugs Bnnuy");
@@ -395,5 +396,12 @@ public class Ennemy : MonoBehaviour
             if (!isStunned)
                 GetStunned();
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer != 7 || !isRushAttack) return;
+        if (!isStunned)
+            GetStunned();
     }
 }

@@ -124,7 +124,6 @@ public class EnemyAttack : MonoBehaviour
         
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.5f, 0f);
         _linkedEnemy.transform.GetComponent<CapsuleCollider>().height = 1.0f;
-        _linkedEnemy.transform.GetComponent<Rigidbody>().AddForce(-_forceForRush, ForceMode.Impulse);
         _forceForRush = Vector3.zero;
         if (_linkedEnemy.ennemyType == Enum_EnnemyTypes.EnnemyTypes.Rabbit)
             _linkedEnemy.InvokeRepeating(nameof(_linkedEnemy.ChanceForRush), 5f, 3f);
