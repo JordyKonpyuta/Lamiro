@@ -484,7 +484,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 2905921040653107858}
   fullScreenToggle: {fileID: 5555628424166790739}
   qualityDropdown: {fileID: 5396266209955330025}
-  levelToLoad: GameScene
+  levelToLoad: Intro
 --- !u!82 &1625953877993883451
 AudioSource:
   m_ObjectHideFlags: 0

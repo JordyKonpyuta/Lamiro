@@ -18,25 +18,28 @@ public class Intro : MonoBehaviour
     private void Awake()
     {
         _audiosource = GetComponent<AudioSource>();
+        introImage.sprite = introImages[_indexDialogue];
+        introText.text = introTexts[_indexDialogue];
     }
 
     public void NextButton()
     {
-        if (_indexDialogue < introImages.Length)
+        GetComponent<Animator>().SetBool("Next", true);
+        Invoke(nameof(Animation), 1);
+    }
+
+    private void DisplayNextDialogue()
+    {
+        if (_indexDialogue < introImages.Length - 1)
         {
             _indexDialogue++;
-            DisplayNextDialogue(_indexDialogue);
+            introImage.sprite = introImages[_indexDialogue];
+            introText.text = introTexts[_indexDialogue];
         }
         else
         {
             SceneManager.LoadScene("GameScene");
         }
-    }
-
-    private void DisplayNextDialogue(int index)
-    {
-        introImage.sprite = introImages[index];
-        introText.text = introTexts[index];
     }
 
     public void MenuButton()
@@ -48,5 +51,10 @@ public class Intro : MonoBehaviour
     {
         _audiosource.resource = audio;
         _audiosource.Play();
+    }
+
+    private void Animation()
+    {
+        GetComponent<Animator>().SetBool("Next", false);
     }
 }
