@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour
 
     public AudioResource[] damageSounds;
 
+    public GameObject vfx;
+
     // -------------------- //
     //       FUNCTIONS      //
     // -------------------- //
@@ -67,7 +69,9 @@ public class PlayerHealth : MonoBehaviour
         _currentHealth -= d;
         gameObject.GetComponentInParent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
         gameObject.GetComponentInParent<AudioSource>().Play();
-        print(_currentHealth);
+        vfx.SetActive(true);
+        vfx.GetComponent<ParticleSystem>().Play();
+        Invoke(nameof(DesactivateVFX), 0.5f);
         if (_currentHealth <= 0)
         {
             Death();
@@ -81,5 +85,11 @@ public class PlayerHealth : MonoBehaviour
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         HUD.Instance.SetVisualHealth();
         GameOver.Instance.Animation();
+    }
+
+    private void DesactivateVFX()
+    {
+        vfx.SetActive(false);
+        vfx.GetComponent<ParticleSystem>().Stop();
     }
 }
