@@ -5202,8 +5202,11 @@ MonoBehaviour:
   - {fileID: 6429995618479539488}
   - {fileID: 8450447636492288929}
   deathSound: {fileID: 8300000, guid: cf8c135007d1494429212e445421d987, type: 3}
+  mushroomSound: {fileID: 8300000, guid: 10dbff089cf48ef4eb545a764c121a5b, type: 3}
   isAttacking: 0
+  isRushAttack: 0
   isStunned: 0
+  isGiant: 0
   navMesh: {fileID: 0}
   player: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}

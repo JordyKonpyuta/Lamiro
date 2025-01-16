@@ -12,6 +12,7 @@ public class Ennemy : MonoBehaviour
     
     // Audio
     public AudioResource deathSound;
+    public AudioResource mushroomSound;
     private AudioSource _audioSource;
 
     // Stats
@@ -328,12 +329,22 @@ public class Ennemy : MonoBehaviour
                     GetStunned();
                 }
                 break;
+            case Enum_EnnemyTypes.EnnemyTypes.Mushroom:
+                if (_health == _maxHealth)
+                {
+                    PlaySound(mushroomSound);
+                }
+                _health -= damage;
+                if (_health <= 0)
+                    Death();
+                break;
+                
         }
     }
 
     private void Death()
     {
-        PlaySound();
+        PlaySound(deathSound);
         _attack = 0;
         _isDead = true;
         player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
@@ -354,9 +365,9 @@ public class Ennemy : MonoBehaviour
     }
     
     // Sound Player
-    private void PlaySound()
+    private void PlaySound(AudioResource audio)
     {
-        _audioSource.resource = deathSound;
+        _audioSource.resource = audio;
         _audioSource.Play();
     }
     
