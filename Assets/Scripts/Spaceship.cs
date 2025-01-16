@@ -33,6 +33,7 @@ public class Spaceship : MonoBehaviour
             else
             {
                 print("Congratulations !");
+                Inventory.Instance.CancelInvoke(nameof(Inventory.Instance.SetTimer));
                 EndGame.Instance.OnPopUp();
             }   
         }

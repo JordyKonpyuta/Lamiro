@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -27,11 +28,12 @@ public class Inventory : MonoBehaviour
         _instance = this;
     }
 
-    void Update()
+    private void Start()
     {
-            timer += Time.deltaTime;
+        InvokeRepeating(nameof(SetTimer), 1, 1);
     }
-    
+
+
     // Getters
     public int GetScrews()
     {
@@ -43,6 +45,11 @@ public class Inventory : MonoBehaviour
     public void AddScrews(int amount)
     {
         screws += amount;
+    }
+
+    public void SetTimer()
+    {
+        timer++;
     }
     
 

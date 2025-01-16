@@ -14,7 +14,7 @@ public class EndGame : MonoBehaviour
 
     public AudioResource popUpSound;
 
-    private int score;
+    private int _score;
 
     private static EndGame _instance;
 
@@ -43,19 +43,20 @@ public class EndGame : MonoBehaviour
 
     public void OnPopUp()
     {
+        CalculateScore();
         GetComponent<Canvas>().enabled = true;
         MusicManager.Instance.StopSound();
         PlaySound(popUpSound);
         GetComponent<Animator>().SetBool("IsOpen", true);
-        CalculateScore();
     }
 
     public void CalculateScore()
     {
-        score += Inventory.Instance.GetScrews();
-        score += (int)((1800 - Inventory.Instance.timer) * 0.5);
-        scoreText.text = "Score : " + score;
-        rank.sprite = score switch
+        _score += Inventory.Instance.GetScrews();
+        if ((int)((1800 - Inventory.Instance.timer) * 0.5) > 0)
+            _score += (int)((1800 - Inventory.Instance.timer) * 0.5);
+        scoreText.text = "Score : " + _score;
+        rank.sprite = _score switch
         {
             <= 300 => rankImages[4],
             <= 400 => rankImages[3],
