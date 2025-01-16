@@ -10,6 +10,8 @@ public class Collectibles : MonoBehaviour
 
     public int spaceshipIndex;
 
+    public GameObject vfx;
+
     public Transform[] spaceshipMeshes;
     public Transform[] meshes;
 
@@ -124,6 +126,7 @@ public class Collectibles : MonoBehaviour
                     DesactivateMesh(1);
                     DesactivateMesh(2);
                     Destroy(gameObject.GetComponent<Collider>());
+                    Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
                 case Enum_Collectibles.CollectibleType.Sword :
@@ -132,6 +135,7 @@ public class Collectibles : MonoBehaviour
                     PlaySound(2);
                     DesactivateMesh(0);
                     Destroy(gameObject.GetComponent<Collider>());
+                    Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
                 case Enum_Collectibles.CollectibleType.Gun :
@@ -140,6 +144,7 @@ public class Collectibles : MonoBehaviour
                     PlaySound(3);
                     DesactivateMesh(1);
                     Destroy(gameObject.GetComponent<Collider>());
+                    Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
                 case Enum_Collectibles.CollectibleType.Jetpack :
@@ -148,6 +153,7 @@ public class Collectibles : MonoBehaviour
                     PlaySound(4);
                     DesactivateMesh(2);
                     Destroy(gameObject.GetComponent<Collider>());
+                    Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
                 case Enum_Collectibles.CollectibleType.SpaceshipPieces :
@@ -156,6 +162,7 @@ public class Collectibles : MonoBehaviour
                     PlaySound(5);
                     DesactivateMesh(spaceshipIndex);
                     Destroy(gameObject.GetComponent<Collider>());
+                    Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
             }

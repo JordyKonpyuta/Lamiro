@@ -13,6 +13,8 @@ public class Interactable : MonoBehaviour
     private List<Interactable> _linkedInteractables = new();
     private Enum_MushroomColors.Colors _objectColor;
 
+    public GameObject vfx;
+
     public Transform[] meshes;
 
     private GameObject _interactable;
@@ -33,6 +35,7 @@ public class Interactable : MonoBehaviour
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
                 ActivateMesh(2);
+                vfx.SetActive(true);
                 _objectColor = Enum_MushroomColors.Colors.Green;
                 _allInteractables = Resources.FindObjectsOfTypeAll<Interactable>();
                 foreach (Interactable interObject in _allInteractables)
