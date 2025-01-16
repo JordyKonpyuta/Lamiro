@@ -83,7 +83,7 @@ public class Interactable : MonoBehaviour
                 {
                     foreach (LinkedObject linkedObject in curLinkObj.ToList())
                     {
-                        if (linkedObject)
+                        if (linkedObject.isActiveAndEnabled)
                             linkedObject.Interaction();
                         else
                             _linkedObjects.Remove(linkedObject);
@@ -96,7 +96,7 @@ public class Interactable : MonoBehaviour
                 {
                     foreach (Interactable interObject in curInter.ToList())
                     {
-                        if (interObject)
+                        if (interObject.isActiveAndEnabled)
                             interObject.switchUpColors();
                         else
                             _linkedInteractables.Remove(interObject);

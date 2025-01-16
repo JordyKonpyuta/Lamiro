@@ -80,6 +80,7 @@ public class Sword : MonoBehaviour
         }
         foreach (var curInteractable in _allInteractables.ToList())
         {
+            if (curInteractable) _allInteractables.Remove(curInteractable);
             if (!curInteractable.isActiveAndEnabled) _allInteractables.Remove(curInteractable);
             else
             {
@@ -98,8 +99,12 @@ public class Sword : MonoBehaviour
 
     private void RemoveFromInteractable()
     {
+        print("test");
         foreach (var curInteractable in _allRemovedInteractables)
+        {
             _allInteractables.Remove(curInteractable);
+            print(curInteractable.name);
+        }
     }
 
     private void ResetAttack()
