@@ -10,7 +10,7 @@ public class SwitchCameraSide : MonoBehaviour
     [Tooltip("Is one of the sides a Beeg Room?")] public bool bigRoom;
     [Tooltip("Set the big room's position")] public enum_Sides.Sides sideEntranceForBigRoom;
     [Tooltip("Is it a screen transition")] public bool mapTransition;
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     [Tooltip("Which Scene to go In")] public SceneAsset newMap;
     #endif
 
@@ -69,8 +69,10 @@ public class SwitchCameraSide : MonoBehaviour
                 case enum_Sides.Direction.Vertical:
                     if (Math.Abs(_refValue - other.GameObject().transform.position.z) > 1.5f)
                     {
+#if UNITY_EDITOR
                         if (mapTransition)
                             SceneManager.LoadScene(newMap.name, LoadSceneMode.Single);
+#endif
                         if (other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().trueCameraPosition.z <
                             this.GameObject().transform.position.z)
@@ -89,8 +91,10 @@ public class SwitchCameraSide : MonoBehaviour
                 case enum_Sides.Direction.Horizontal:
                     if (Math.Abs(_refValue - other.GameObject().transform.position.x) > 1.5f)
                     {
+#if UNITY_EDITOR
                         if (mapTransition)
                             SceneManager.LoadScene(newMap.name, LoadSceneMode.Single);
+#endif
                         if (other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().trueCameraPosition.x <
                             this.GameObject().transform.position.x)
