@@ -636,7 +636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fda5d812e9a4045af7abcc5ad8a5cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 4
   spaceshipIndex: 0
   vfx: {fileID: 8474217903878114313}
   spaceshipMeshes:

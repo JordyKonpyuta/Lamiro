@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6029601681274030902}
   - component: {fileID: 4726841108839244703}
   - component: {fileID: 9030132579935263737}
-  - component: {fileID: 1056851182200991263}
+  - component: {fileID: 2531515054478150321}
   - component: {fileID: 7171034396018960644}
   - component: {fileID: 5551177663456391211}
   m_Layer: 0
@@ -140,8 +140,8 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!135 &1056851182200991263
-SphereCollider:
+--- !u!65 &2531515054478150321
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -153,13 +153,13 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.3
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!82 &7171034396018960644
 AudioSource:
@@ -283,7 +283,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1001 &2600022492018325158
 PrefabInstance:
@@ -355,6 +355,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a00071a331002e34dac141a8420be5d3, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: a00071a331002e34dac141a8420be5d3, type: 3}
+      propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6400000, guid: a00071a331002e34dac141a8420be5d3, type: 3}
@@ -451,6 +455,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 19315f2d53d67fd42aafad15bc105969, type: 2}
+    - target: {fileID: 6400000, guid: 4af8bd0ad06485747b851e7b674e7878, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6400000, guid: 4af8bd0ad06485747b851e7b674e7878, type: 3}
       propertyPath: m_CookingOptions
       value: -1
@@ -618,6 +626,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 86fb0c882e9516049bdd6f1a81d3bfde, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 86fb0c882e9516049bdd6f1a81d3bfde, type: 3}
+      propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6400000, guid: 86fb0c882e9516049bdd6f1a81d3bfde, type: 3}

@@ -5209,7 +5209,8 @@ MonoBehaviour:
   isRushAttack: 0
   isStunned: 0
   isGiant: 0
-  screwDrop: []
+  screwDrop: {fileID: 4015057596957388301, guid: f4d7a1d0b9750bf469a043c3fd6038ef, type: 3}
+  jetpackDrop: {fileID: 6115305200737904929, guid: c4bed3ef7b00fd7459eb13a06e060b1e, type: 3}
   navMesh: {fileID: 0}
   player: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}

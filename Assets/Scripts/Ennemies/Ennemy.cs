@@ -35,10 +35,8 @@ public class Ennemy : MonoBehaviour
     
     // Death
     private bool _isDead = false;
-    
-    public GameObject[] screwDrop;
-    
-    
+    public GameObject screwDrop;
+    public GameObject jetpackDrop;
 
     // AI
     public NavMeshAgent navMesh;
@@ -125,6 +123,12 @@ public class Ennemy : MonoBehaviour
 
     private void Update()
     {
+        if (_isDead)
+        {
+            float curRotAdd = Random.Range(80, 100) * Time.deltaTime;
+            transform.Rotate(0f, curRotAdd, 0f);
+        }
+
         if (isStunned)
         {
             float curRotAdd = 90 * Time.deltaTime * (negRot ? -1 : 1);
@@ -367,38 +371,55 @@ public class Ennemy : MonoBehaviour
         PlaySound(deathSound);
         _attack = 0;
         _isDead = true;
-        player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
-        navMesh.Warp(new Vector3(0, -50, 0));
-        _rigidbody.useGravity = false;
-        navMesh.SetDestination(new Vector3(0, -50, 0));
-        navMesh.isStopped = true;
-        
-        Vector3 screwThrowVector = Random.onUnitSphere * 20;
-        screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
-        GameObject thisScrewDrop;
         switch (ennemyType)
         {
             default:
-                int randNum = UnityEngine.Random.Range(0, 100);
-                if (randNum > 95)
-                    thisScrewDrop = Instantiate(screwDrop[3], transform.position, transform.rotation);
-                else if (randNum > 80)
-                    thisScrewDrop = Instantiate(screwDrop[2], transform.position, transform.rotation);
-                else if (randNum > 50)
-                    thisScrewDrop = Instantiate(screwDrop[1], transform.position, transform.rotation);
-                else
-                    thisScrewDrop = Instantiate(screwDrop[0], transform.position, transform.rotation);
+                player.GetComponent<AllPlayerReferences>().allEnemies.Add(this);
+                navMesh.Warp(new Vector3(0, -50, 0));
+                _rigidbody.useGravity = false;
+                navMesh.SetDestination(new Vector3(0, -50, 0));
+                navMesh.isStopped = true;
+                Vector3 screwThrowVector = Random.onUnitSphere * 20;
+                screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
                 
-                thisScrewDrop.GetComponent<Rigidbody>().AddForce(screwThrowVector, ForceMode.Impulse);
+                int randNum = UnityEngine.Random.Range(0, 100);
+                if (randNum > 90)
+                {
+                    GameObject thisScrewDrop = thisScrewDrop = Instantiate(screwDrop, transform.position + Vector3.up * 5, transform.rotation);
+                    thisScrewDrop.GetComponent<Rigidbody>().AddForce(screwThrowVector, ForceMode.Impulse);
+                    screwThrowVector = Random.onUnitSphere * 20;
+                }
+                if (randNum > 70)
+                {
+                    GameObject thisScrewDrop = thisScrewDrop = Instantiate(screwDrop, transform.position + Vector3.up * 5, transform.rotation);
+                    thisScrewDrop.GetComponent<Rigidbody>().AddForce(screwThrowVector, ForceMode.Impulse);
+                }
                 break;
             case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
-                //Instantiate()
+                float timeWaitScrew = 0.0f;
+                for (int i = 0, num = UnityEngine.Random.Range(20, 25); i < num; i++)
+                {
+                    Invoke(nameof(SummonScrew), timeWaitScrew);
+                    timeWaitScrew += 0.1f;
+                    navMesh.isStopped = true;
+                }
+                GameObject thisJetpackDrop = Instantiate(jetpackDrop, transform.position + Vector3.up, transform.rotation);
+                thisJetpackDrop.GetComponent<Collectibles>().type = Enum_Collectibles.CollectibleType.Jetpack;
+                Destroy(gameObject, 3f);
+                _isDead = true;
                 break;
         }
-        
-       
     }
 
+    private void SummonScrew()
+    {
+        Vector3 screwThrowVector = Random.onUnitSphere * 10;
+        Vector3 randomPosModifier = Random.onUnitSphere * 1;
+        screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
+        GameObject thisRabbitScrewDrop =
+            Instantiate(screwDrop, transform.position + randomPosModifier + Vector3.up * 5, transform.rotation);
+        thisRabbitScrewDrop.GetComponent<Rigidbody>().AddForce(screwThrowVector, ForceMode.Impulse);
+    }
     // Left the Room
     public void ResetStatus()
     {
