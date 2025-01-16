@@ -125,7 +125,9 @@ public class Collectibles : MonoBehaviour
                     DesactivateMesh(0);
                     DesactivateMesh(1);
                     DesactivateMesh(2);
-                    Destroy(gameObject.GetComponent<Collider>());
+                    foreach(Collider thisCol in gameObject.GetComponents<Collider>())
+                        Destroy(thisCol);
+                    Destroy(gameObject.GetComponent<Rigidbody>());
                     Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
@@ -134,7 +136,8 @@ public class Collectibles : MonoBehaviour
                     HUD.Instance.swordIcon.enabled = true;
                     PlaySound(2);
                     DesactivateMesh(0);
-                    Destroy(gameObject.GetComponent<Collider>());
+                    foreach(Collider thisCol in gameObject.GetComponents<Collider>())
+                        Destroy(thisCol);
                     Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
@@ -143,7 +146,9 @@ public class Collectibles : MonoBehaviour
                     HUD.Instance.gunIcon.enabled = true;
                     PlaySound(3);
                     DesactivateMesh(1);
-                    Destroy(gameObject.GetComponent<Collider>());
+                    foreach(Collider thisCol in gameObject.GetComponents<Collider>())
+                        Destroy(thisCol);
+                    Destroy(gameObject.GetComponent<Rigidbody>());
                     Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
@@ -152,7 +157,9 @@ public class Collectibles : MonoBehaviour
                     HUD.Instance.jetpackIcon.enabled = true;
                     PlaySound(4);
                     DesactivateMesh(2);
-                    Destroy(gameObject.GetComponent<Collider>());
+                    foreach(Collider thisCol in gameObject.GetComponents<Collider>())
+                        Destroy(thisCol);
+                    Destroy(gameObject.GetComponent<Rigidbody>());
                     Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;
@@ -161,7 +168,9 @@ public class Collectibles : MonoBehaviour
                     Pause.Instance.SetText();
                     PlaySound(5);
                     DesactivateMesh(spaceshipIndex);
-                    Destroy(gameObject.GetComponent<Collider>());
+                    foreach(Collider thisCol in gameObject.GetComponents<Collider>())
+                        Destroy(thisCol);
+                    Destroy(gameObject.GetComponent<Rigidbody>());
                     Destroy(vfx);
                     Destroy(gameObject, 1.5f);
                     break;

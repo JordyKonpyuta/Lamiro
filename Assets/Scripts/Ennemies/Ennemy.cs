@@ -22,7 +22,6 @@ public class Ennemy : MonoBehaviour
     private int _attack = 1;
     public bool isAttacking = false;
     public bool isRushAttack = false;
-    private bool _isDead = false;
     
     public bool isStunned = false;
     private float _stunDuration = 8.0f;
@@ -30,6 +29,13 @@ public class Ennemy : MonoBehaviour
     private float _Rotated;
     private bool negRot = false; 
     public bool isGiant = false;
+    
+    // Death
+    private bool _isDead = false;
+    
+    public GameObject[] screwDrop;
+    
+    
 
     // AI
     public NavMeshAgent navMesh;
@@ -356,6 +362,32 @@ public class Ennemy : MonoBehaviour
         navMesh.Warp(new Vector3(0, -50, 0));
         _rigidbody.useGravity = false;
         navMesh.SetDestination(new Vector3(0, -50, 0));
+        navMesh.isStopped = true;
+        
+        Vector3 screwThrowVector = Random.onUnitSphere * 20;
+        screwThrowVector = new Vector3(screwThrowVector.x, 50, screwThrowVector.z);
+        GameObject thisScrewDrop;
+        switch (ennemyType)
+        {
+            default:
+                int randNum = UnityEngine.Random.Range(0, 100);
+                if (randNum > 95)
+                    thisScrewDrop = Instantiate(screwDrop[3], transform.position, transform.rotation);
+                else if (randNum > 80)
+                    thisScrewDrop = Instantiate(screwDrop[2], transform.position, transform.rotation);
+                else if (randNum > 50)
+                    thisScrewDrop = Instantiate(screwDrop[1], transform.position, transform.rotation);
+                else
+                    thisScrewDrop = Instantiate(screwDrop[0], transform.position, transform.rotation);
+                
+                thisScrewDrop.GetComponent<Rigidbody>().AddForce(screwThrowVector, ForceMode.Impulse);
+                break;
+            case Enum_EnnemyTypes.EnnemyTypes.Rabbit:
+                //Instantiate()
+                break;
+        }
+        
+       
     }
 
     // Left the Room
@@ -367,6 +399,7 @@ public class Ennemy : MonoBehaviour
         _isDead = false;
         _rigidbody.useGravity = true;
         StopRNGForNow(); 
+        navMesh.isStopped = false;
     }
     
     // Sound Player
