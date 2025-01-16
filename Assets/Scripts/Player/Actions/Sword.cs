@@ -20,6 +20,9 @@ public class Sword : MonoBehaviour
     // Audio
     public AudioResource[] swordSounds;
     private AudioSource _audioSource;
+    
+    // VFX
+    public GameObject vfx;
 
     // -------------------- //
     //       FUNCTIONS      //
@@ -54,6 +57,8 @@ public class Sword : MonoBehaviour
         if (_allEnemies == null && _allInteractables == null)
         {
             PlaySound(0);
+            vfx.SetActive(true);
+            vfx.GetComponent<ParticleSystem>().Play();
             return;
         }
 

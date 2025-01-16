@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
 
     private bool _canAttack = true;
 
+    public GameObject vfx;
+
     public AudioResource[] bulletSounds;
     private AudioSource _audioSource;
     
@@ -53,6 +55,8 @@ public class Gun : MonoBehaviour
     private void PlaySound()
     {
         _audioSource.resource = bulletSounds[UnityEngine.Random.Range(0, bulletSounds.Length - 1)];
+        vfx.SetActive(true);
+        vfx.GetComponent<ParticleSystem>().Play();
         _audioSource.Play();
     }
 }

@@ -12,6 +12,8 @@ public class Jump : MonoBehaviour
     private AudioSource _audioSource;
     public AudioResource jumpSound;
 
+    public GameObject vfx;
+
     private string[] _allLayerNames;
 
     private Rigidbody _playerBodyRef;
@@ -42,12 +44,22 @@ public class Jump : MonoBehaviour
         {
             _playerBodyRef.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             PlaySound();
+            vfx.SetActive(true);
+            vfx.GetComponent<ParticleSystem>().Play();
+            Invoke(nameof(DesactivateVFX), 0.5f);
         }
+        
     }
 
     private void PlaySound()
     {
         _audioSource.resource = jumpSound;
         _audioSource.Play();
+    }
+
+    private void DesactivateVFX()
+    {
+        vfx.SetActive(false);
+        vfx.GetComponent<ParticleSystem>().Stop();
     }
 }

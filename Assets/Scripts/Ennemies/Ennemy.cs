@@ -16,6 +16,9 @@ public class Ennemy : MonoBehaviour
     public AudioResource mushroomSound;
     private AudioSource _audioSource;
 
+    // VFX
+    public GameObject vfx;
+
     // Stats
     private int _health = 5;
     private int _maxHealth = 5;
@@ -329,6 +332,8 @@ public class Ennemy : MonoBehaviour
         {
             default:
                 _health -= damage;
+                vfx.SetActive(true);
+                vfx.GetComponent<ParticleSystem>().Play();
                 if (_health <= 0)
                     Death();
                 break;
@@ -336,6 +341,8 @@ public class Ennemy : MonoBehaviour
                 if (isStunned)
                 {
                     _health -= damage;
+                    vfx.SetActive(true);
+                    vfx.GetComponent<ParticleSystem>().Play();
                     if (_health <= 0)
                         Destroy(gameObject);
                 }
@@ -346,6 +353,8 @@ public class Ennemy : MonoBehaviour
                     PlaySound(mushroomSound);
                 }
                 _health -= damage;
+                vfx.SetActive(true);
+                vfx.GetComponent<ParticleSystem>().Play();
                 if (_health <= 0)
                     Death();
                 break;

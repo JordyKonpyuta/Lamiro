@@ -13,7 +13,10 @@ public class Interactable : MonoBehaviour
     private List<Interactable> _linkedInteractables = new();
     private Enum_MushroomColors.Colors _objectColor;
 
+    // VFX
     public GameObject vfx;
+    public GameObject hitVfx;
+    public GameObject grassVfx;
 
     public Transform[] meshes;
 
@@ -72,8 +75,10 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Crate :
                 break;
             case Enum_InteractableTypes.InteractableType.Mushroom :
-                
                 List<LinkedObject> curLinkObj = _linkedObjects;
+                hitVfx.SetActive(true);
+                hitVfx.GetComponent<ParticleSystem>().Play();
+                Invoke(nameof(DesactivateVFX), 0.5f);
                 if (_linkedObjects.Count != 0)
                 {
                     foreach (LinkedObject linkedObject in curLinkObj.ToList())
@@ -101,7 +106,12 @@ public class Interactable : MonoBehaviour
             case Enum_InteractableTypes.InteractableType.Pinecone :
                 break;
             case Enum_InteractableTypes.InteractableType.Grass :
-                Destroy(gameObject,0.1f);
+                grassVfx.SetActive(true);
+                grassVfx.GetComponent<ParticleSystem>().Play();
+                Destroy(meshes[1].gameObject);
+                Destroy(vfx, 1);
+                vfx.transform.parent = null;
+                Destroy(gameObject,0.2f);
                 break;
         }
     }
@@ -123,7 +133,12 @@ public class Interactable : MonoBehaviour
             meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = _redColor;
         else
             meshes[2].gameObject.GetComponent<MeshRenderer>().material.color = _greenColor;
-        
         _objectColor = _objectColor == Enum_MushroomColors.Colors.Green ? Enum_MushroomColors.Colors.Red : Enum_MushroomColors.Colors.Green;
+    }
+
+    private void DesactivateVFX()
+    {
+        hitVfx.SetActive(false);
+        hitVfx.GetComponent<ParticleSystem>().Stop();
     }
 }
