@@ -58,20 +58,20 @@ public class Sword : MonoBehaviour
         if (_allEnemies == null && _allInteractables == null)
         {
             PlaySound(0);
-            vfx.SetActive(true);
-            vfx.GetComponent<ParticleSystem>().Play();
             return;
         }
+        
+        vfx.SetActive(true);
+        vfx.GetComponent<ParticleSystem>().Play();
 
         if (_allEnemies.Count <= 0 && _allInteractables.Count <= 0)
         {
             PlaySound(0);
             return;
         }
-        else
-        {
-            PlaySound(1);
-        }
+        
+        PlaySound(1);
+        
         foreach (var curEnemy in _allEnemies.ToList())
         {
             if (!curEnemy.isActiveAndEnabled) _allEnemies.Remove(curEnemy);
@@ -109,6 +109,9 @@ public class Sword : MonoBehaviour
 
     private void ResetAttack()
     {
+        
+        vfx.GetComponent<ParticleSystem>().Stop();
+        vfx.SetActive(false);
         _canAttack = true;
     }
 
