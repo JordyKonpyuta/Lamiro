@@ -21918,6 +21918,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2245442373300218504, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
+      propertyPath: jumpForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301954080204595457, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
+      propertyPath: m_Mass
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2773714158423875624, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100.00597
@@ -21957,6 +21965,10 @@ PrefabInstance:
     - target: {fileID: 2773714158423875624, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208945292121518881, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
+      propertyPath: movementSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8964077863070194092, guid: 5d2307858e47e3f4086ebb198662a157, type: 3}
       propertyPath: cameraStartPosition.x
