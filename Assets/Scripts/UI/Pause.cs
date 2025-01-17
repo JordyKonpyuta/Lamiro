@@ -10,6 +10,7 @@ public class Pause : MonoBehaviour
 
     public AudioResource popUpAudio;
     public AudioResource popOutAudio;
+    private GameObject _playerRef;
     
     // Singleton to be accessible anywhere
     
@@ -37,6 +38,8 @@ public class Pause : MonoBehaviour
     void Start()
     {
         GetComponent<Canvas>().enabled = false;
+        _playerRef = GameObject.FindGameObjectWithTag("Player");
+        Instance.SetText();
     }
 
     public void Animation()
@@ -70,7 +73,7 @@ public class Pause : MonoBehaviour
 
     public void SetText()
     {
-        spaceshipPiecesText.text = "Spaceship Pieces : " + Inventory.Instance.spaceshipPieces;
+        spaceshipPiecesText.text = "Spaceship Pieces : " + _playerRef.GetComponent<AllPlayerReferences>().invRef.spaceshipPieces;
     }
     
     

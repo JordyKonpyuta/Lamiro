@@ -17,6 +17,8 @@ public class EndGame : MonoBehaviour
 
     private static EndGame _instance;
 
+    private GameObject _playerRef;
+
     public static EndGame Instance
     {
         get
@@ -38,6 +40,7 @@ public class EndGame : MonoBehaviour
     private void Start()
     {
         GetComponent<Canvas>().enabled = false;
+        _playerRef = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void OnPopUp()
@@ -51,9 +54,9 @@ public class EndGame : MonoBehaviour
 
     public void CalculateScore()
     {
-        _score += Inventory.Instance.GetScrews();
-        if ((int)((1800 - Inventory.Instance.timer) * 0.5) > 0)
-            _score += (int)((1800 - Inventory.Instance.timer) * 0.5);
+        _score += _playerRef.GetComponent<AllPlayerReferences>().invRef.GetScrews();
+        if ((int)((1800 - _playerRef.GetComponent<AllPlayerReferences>().invRef.timer) * 0.5) > 0)
+            _score += (int)((1800 - _playerRef.GetComponent<AllPlayerReferences>().invRef.timer) * 0.5);
         scoreText.text = "Score : " + _score;
         rank.sprite = _score switch
         {

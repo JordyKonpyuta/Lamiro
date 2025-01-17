@@ -22,8 +22,9 @@ public class Spaceship : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (Inventory.Instance.spaceshipPieces < 5)
+            if (other.gameObject.GetComponent<AllPlayerReferences>().invRef.spaceshipPieces < 5)
             {
+                print("1");
                 SpaceshipPopUp.Instance.PopUp();
                 other.GetComponent<PlayerHealth>().SetHealth(other.GetComponent<PlayerHealth>().GetMaxHealth());
                 other.GetComponent<AllPlayerReferences>().HUDref.GetComponent<HUD>().SetVisualHealth();
@@ -32,8 +33,9 @@ public class Spaceship : MonoBehaviour
 
             else
             {
+                print("2");
                 print("Congratulations !");
-                Inventory.Instance.CancelInvoke(nameof(Inventory.Instance.SetTimer));
+                other.gameObject.GetComponent<AllPlayerReferences>().invRef.CancelTimer();
                 EndGame.Instance.OnPopUp();
             }   
         }

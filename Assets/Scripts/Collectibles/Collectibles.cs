@@ -118,7 +118,7 @@ public class Collectibles : MonoBehaviour
             {
                 case Enum_Collectibles.CollectibleType.Screws :
                     other.gameObject.GetComponent<Inventory>().AddScrews(screwsGains);
-                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.UpdateScrewsText(Inventory.Instance.GetScrews());
+                    other.gameObject.GetComponent<AllPlayerReferences>().HUDref.UpdateScrewsText(other.gameObject.GetComponent<AllPlayerReferences>().invRef.GetScrews());
                     PlaySound(screwsGains < 2 ? 0 : 1);
                     DesactivateMesh(0);
                     DesactivateMesh(1);
