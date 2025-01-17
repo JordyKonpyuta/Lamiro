@@ -51,6 +51,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int d)
     {
         _currentHealth -= d;
+        gameObject.GetComponent<AllPlayerReferences>().HUDref.SetVisualHealth();
         gameObject.GetComponentInParent<AudioSource>().resource = damageSounds[UnityEngine.Random.Range(0, damageSounds.Length - 1)];
         gameObject.GetComponentInParent<AudioSource>().Play();
         vfx.SetActive(true);

@@ -81,7 +81,7 @@ public class SwitchCameraSide : MonoBehaviour
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().GoRoomBottom(sideEntranceForBigRoom == enum_Sides.Sides.South, entranceRefVector);
                         }
-                        other.gameObject.transform.GetComponent<AllPlayerReferences>().Entrypoint = other.gameObject.transform.transform.position;
+                        other.gameObject.transform.GetComponent<AllPlayerReferences>().Entrypoint = other.gameObject.transform.position;
                     }
                     break;
                 case enum_Sides.Direction.Horizontal:
@@ -101,7 +101,7 @@ public class SwitchCameraSide : MonoBehaviour
                             other.GameObject().GetComponent<AllPlayerReferences>().cameraRef
                                 .GetComponent<CustomCamera>().GoRoomLeft(sideEntranceForBigRoom == enum_Sides.Sides.West, entranceRefVector);
                         }
-                        other.gameObject.transform.GetComponent<AllPlayerReferences>().Entrypoint = other.gameObject.transform.transform.position;
+                        other.gameObject.transform.GetComponent<AllPlayerReferences>().Entrypoint = other.gameObject.transform.position;
                     }
                     break;
                 case enum_Sides.Direction.None:

@@ -33,11 +33,9 @@ public class Water : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print(other.gameObject.GetComponent<AllPlayerReferences>().Entrypoint);
             other.transform.position = new Vector3(other.gameObject.GetComponent<AllPlayerReferences>().Entrypoint.x,
-                    other.gameObject.GetComponent<AllPlayerReferences>().Entrypoint.y + 1f,
+                    other.gameObject.GetComponent<AllPlayerReferences>().Entrypoint.y + 3f,
                     other.gameObject.GetComponent<AllPlayerReferences>().Entrypoint.z);
-            print (other.gameObject.transform.position);
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(1);
         }
     }
