@@ -3209,6 +3209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 102900000, guid: 3368703d14133b546bb3123946543bd3, type: 3}
     - target: {fileID: 7605233899470801426, guid: c474a970cf7f6b543beb28337746812e, type: 3}
+      propertyPath: mapName
+      value: Area2Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605233899470801426, guid: c474a970cf7f6b543beb28337746812e, type: 3}
       propertyPath: mapTransition
       value: 1
       objectReference: {fileID: 0}
